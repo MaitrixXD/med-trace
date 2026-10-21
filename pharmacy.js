@@ -166,6 +166,7 @@ function placeOrder(medId) {
   else if (med.strips <= 2) med.stock = "low";
   else med.stock = "available";
   saveData(); closeModal(); renderNavBadges(); renderPharmacy();
+  if (typeof syncOrderToBackend === "function") syncOrderToBackend(order);
   showToast("✅ " + orderId + " placed! Delivering in ~" + etaMins + " min 🛵", "success");
   setTimeout(function() {
     showSection("orders", document.getElementById("nav-orders"));

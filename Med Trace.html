@@ -409,9 +409,7 @@
                         <span>·</span>
                         <span>🔒 256-bit AES</span>
                         <span>·</span>
-                        <span>📋 Audit Ready</span>
-                        <span>·</span>
-                        <span>⚡ Real-Time Sync</span>
+                        <span id="loginApiStatus">🌐 Cloud API: Connecting...</span>
                     </div>
 
                 </div> <!-- .login-card -->
@@ -450,6 +448,12 @@
                         <button class="lang-option" onclick="setLanguage('hi')" data-lang="hi">🇮🇳 हिंदी</button>
                         <button class="lang-option" onclick="setLanguage('mr')" data-lang="mr">🇮🇳 मराठी</button>
                     </div>
+                </div>
+
+                <!-- Live Backend API Status -->
+                <div class="api-status-badge connecting" id="apiStatusBadge" onclick="checkBackendConnection()" title="Render Cloud Backend: Connecting...">
+                    <span class="api-status-dot" id="apiStatusDot"></span>
+                    <span class="api-status-text" id="apiStatusText">Cloud Connecting...</span>
                 </div>
 
                 <!-- PDF Export -->

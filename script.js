@@ -2,6 +2,110 @@
    MED-TRACE — Complete JavaScript Logic
    Role-based access | LocalStorage persistence | Full CRUD
 ═══════════════════════════════════════════════════════════ */
+// Detect if running locally or deployed on Vercel
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:5000/api'
+  : 'https://med-trace-chso.onrender.com/api';
+
+let backendConnected = false;
+
+async function checkBackendConnection() {
+  const badge = document.getElementById("apiStatusBadge");
+  const text = document.getElementById("apiStatusText");
+  const loginText = document.getElementById("loginApiStatus");
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/health`, { method: "GET" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    backendConnected = true;
+
+    if (badge) {
+      badge.className = "api-status-badge connected";
+      badge.title = `Connected to Render Backend (${data.service})`;
+    }
+    if (text) text.textContent = "Live Cloud API";
+    if (loginText) loginText.innerHTML = "🟢 Cloud API: Connected";
+    console.log("⚕️ MED-TRACE Backend connected successfully:", API_BASE_URL, data);
+    return true;
+  } catch (err) {
+    backendConnected = false;
+    if (badge) {
+      badge.className = "api-status-badge connecting";
+      badge.title = "Connecting to Render Cloud (Service waking up...)";
+    }
+    if (text) text.textContent = "Cloud Connecting...";
+    if (loginText) loginText.innerHTML = "🟡 Cloud API: Connecting...";
+    console.warn("⚠️ Backend connecting or cold starting:", err.message);
+    return false;
+  }
+}
+
+async function syncFromBackend() {
+  try {
+    const isUp = await checkBackendConnection();
+    if (!isUp) return;
+
+    // 1. Fetch live patient record
+    const pRes = await fetch(`${API_BASE_URL}/patient`);
+    if (pRes.ok) {
+      const pJson = await pRes.json();
+      if (pJson && pJson.data) {
+        if (pJson.data.vitals) appData.patient.vitals = pJson.data.vitals;
+        console.log("⚕️ Patient data synced from backend");
+      }
+    }
+
+    // 2. Fetch live medicines
+    const mRes = await fetch(`${API_BASE_URL}/medicines`);
+    if (mRes.ok) {
+      const mJson = await mRes.json();
+      if (mJson && mJson.data) {
+        console.log(`⚕️ ${mJson.data.length} prescriptions verified with cloud database`);
+      }
+    }
+    saveData();
+  } catch (err) {
+    console.warn("Background sync error (safe fallback to local):", err);
+  }
+}
+
+async function syncMedicineToBackend(med, doctorKey) {
+  try {
+    const payload = {
+      name: med.name,
+      genericName: med.name,
+      dosage: med.dosage,
+      frequency: med.schedule,
+      timing: med.schedule,
+      doctor: doctorKey === "A" ? "DR-A" : "DR-B",
+      doctorName: appData.doctors[doctorKey].name,
+      outcome: med.outcome || "Prescription logged",
+      effectNote: med.effectNote || ""
+    };
+    fetch(`${API_BASE_URL}/medicines`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(e => console.warn("Async medicine sync:", e));
+  } catch (e) { }
+}
+
+async function syncOrderToBackend(order) {
+  try {
+    const payload = {
+      items: [{ name: order.medName, qty: order.qty, price: order.price }],
+      totalAmount: order.price,
+      deliveryAddress: order.address,
+      paymentMethod: order.payment
+    };
+    fetch(`${API_BASE_URL}/orders`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(e => console.warn("Async order sync:", e));
+  } catch (e) { }
+}
 
 /* ─────────────────────────────────────────────
    DEFAULT SEED DATA
@@ -221,9 +325,9 @@ const SEED = {
       }
     ],
     pharmacies: [
-      { id: "f1", name: "MedPlus Pharmacy",     icon: "🏥", distance: "0.4 km", rating: 4.8, time: "25-35 min", open: true },
-      { id: "f2", name: "Apollo Pharmacy",      icon: "💊", distance: "0.9 km", rating: 4.9, time: "30-45 min", open: true },
-      { id: "f3", name: "Wellness Forever",     icon: "🌿", distance: "1.2 km", rating: 4.6, time: "40-55 min", open: true }
+      { id: "f1", name: "MedPlus Pharmacy", icon: "🏥", distance: "0.4 km", rating: 4.8, time: "25-35 min", open: true },
+      { id: "f2", name: "Apollo Pharmacy", icon: "💊", distance: "0.9 km", rating: 4.9, time: "30-45 min", open: true },
+      { id: "f3", name: "Wellness Forever", icon: "🌿", distance: "1.2 km", rating: 4.6, time: "40-55 min", open: true }
     ],
     orders: []
   },
@@ -236,7 +340,7 @@ const SEED = {
       time: "07:30",
       label: "Morning",
       timeLabel: "Empty Stomach · Before Breakfast",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Rajesh Verma (A)",
       active: true,
       lastFired: null,
@@ -250,7 +354,7 @@ const SEED = {
       time: "08:30",
       label: "Morning",
       timeLabel: "After Breakfast",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Rajesh Verma (A)",
       active: true,
       lastFired: null,
@@ -278,7 +382,7 @@ const SEED = {
       time: "13:30",
       label: "Afternoon",
       timeLabel: "After Lunch",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Rajesh Verma (A)",
       active: true,
       lastFired: null,
@@ -292,7 +396,7 @@ const SEED = {
       time: "17:30",
       label: "Evening",
       timeLabel: "With Evening Tea/Snack",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Meena Kapoor (B)",
       active: true,
       lastFired: null,
@@ -306,7 +410,7 @@ const SEED = {
       time: "21:00",
       label: "Night",
       timeLabel: "After Dinner · Before Bed",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Meena Kapoor (B)",
       active: true,
       lastFired: null,
@@ -320,7 +424,7 @@ const SEED = {
       time: "22:00",
       label: "Night",
       timeLabel: "Before Sleep",
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       doctor: "Dr. Meena Kapoor (B)",
       active: true,
       lastFired: null,
@@ -497,12 +601,12 @@ function setBtnLoading(btnId, isLoading, defaultText, loadingText) {
 function switchLoginMethod(role, method) {
   const isPatient = (role === "patient");
   const prefix = isPatient ? "patient" : "doctor";
-  
+
   const pwBtn = document.getElementById(`${prefix}MethodPwBtn`);
   const otpBtn = document.getElementById(`${prefix}MethodOtpBtn`);
   const pwSection = document.getElementById(`${prefix}PwSection`);
   const otpSection = document.getElementById(`${prefix}OtpSection`);
-  
+
   if (method === "pw") {
     if (pwBtn) pwBtn.classList.add("active");
     if (otpBtn) otpBtn.classList.remove("active");
@@ -654,7 +758,7 @@ function sendLoginOtp(role) {
   startLoginOtpTimer(role);
 
   showToast(`📲 OTP sent to +91 ${phone}: ${generatedCode}`, "success");
-  
+
   const otpInput = document.getElementById(isPatient ? "patientOtp" : "doctorOtp");
   if (otpInput) {
     otpInput.value = "";
@@ -666,12 +770,12 @@ function startLoginOtpTimer(role) {
   const isPatient = (role === "patient");
   const timerEl = document.getElementById(isPatient ? "patientOtpTimer" : "doctorOtpTimer");
   const sendBtn = document.getElementById(isPatient ? "btnSendPatientOtp" : "btnSendDoctorOtp");
-  
+
   if (loginOtpState[role].timer) clearInterval(loginOtpState[role].timer);
-  
+
   loginOtpState[role].timeLeft = 30;
   if (sendBtn) sendBtn.disabled = true;
-  
+
   const tick = () => {
     if (loginOtpState[role].timeLeft > 0) {
       if (timerEl) timerEl.textContent = `Resend in ${loginOtpState[role].timeLeft}s`;
@@ -799,7 +903,7 @@ var fpState = {
 function openForgotPassword(role) {
   fpState.target = null;
   fpState.otp = "123456";
-  
+
   let defaultPhone = "";
   if (role === "patient") {
     defaultPhone = (appData.patient && appData.patient.phone) ? cleanPhoneNumber(appData.patient.phone) : "9876543210";
@@ -1067,15 +1171,15 @@ function showSection(id, btn) {
   if (btn) btn.classList.add("active");
 
   // Re-render section
-  if (id === "doctorA")  renderDoctorSection("A");
-  if (id === "doctorB")  renderDoctorSection("B");
-  if (id === "history")  renderHistory();
+  if (id === "doctorA") renderDoctorSection("A");
+  if (id === "doctorB") renderDoctorSection("B");
+  if (id === "history") renderHistory();
   if (id === "timeline") renderTimeline();
-  if (id === "reports")  renderReport("A");
-  if (id === "records")  renderRecords();
-  if (id === "profile")  renderProfile();
+  if (id === "reports") renderReport("A");
+  if (id === "records") renderRecords();
+  if (id === "profile") renderProfile();
   if (id === "pharmacy") renderPharmacy();
-  if (id === "orders")   renderOrders();
+  if (id === "orders") renderOrders();
   if (id === "reminders" && typeof renderReminders === "function") renderReminders();
 }
 
@@ -1132,7 +1236,7 @@ function renderNavBadges() {
 
   // Pharmacy alert badge: count low+out of stock
   const alertCount = appData.pharmacy.medicines.filter(m => m.stock !== "available").length;
-  const pharBadge  = document.getElementById("badgePharmacy");
+  const pharBadge = document.getElementById("badgePharmacy");
   if (pharBadge) {
     if (alertCount > 0) {
       pharBadge.textContent = alertCount;
@@ -1274,7 +1378,7 @@ function renderDoctorSection(key) {
   const docName = translateClinical(d.name);
   const docSpec = translateClinical(d.spec);
   const docHosp = translateClinical(d.hospital);
-  const docExp  = translateClinical(d.experience);
+  const docExp = translateClinical(d.experience);
 
   // Title
   document.getElementById(`doctor${key}Title`).textContent = docName;
@@ -1394,7 +1498,7 @@ function renderDoctorSection(key) {
       <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--blue-600);margin-bottom:10px;">Visits with ${docName}</div>
       ${doctorVisits.map((v, i) => `
         <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;">
-          <span style="flex-shrink:0;font-size:11px;font-weight:800;background:var(--blue-600);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;">${i+1}</span>
+          <span style="flex-shrink:0;font-size:11px;font-weight:800;background:var(--blue-600);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;">${i + 1}</span>
           <div>
             <div style="font-size:12px;font-weight:700;color:var(--ink)">📅 ${esc(v.date)} · ${translateClinical(v.title)}</div>
             <div style="font-size:12px;color:var(--ink-muted);line-height:1.6">${translateClinical(v.desc)}</div>
@@ -1464,17 +1568,17 @@ function renderTimeline() {
   document.getElementById("timelineItems").innerHTML = items.length === 0
     ? `<p style='color:var(--ink-muted);font-size:14px'>${t("noTimelineYet", "No timeline entries yet.")}</p>`
     : items.map((tItem, idx) => {
-        const doctorObj = tItem.doctor === "A" ? appData.doctors.A : appData.doctors.B;
-        const doctorName = translateClinical(doctorObj.name);
-        return `
+      const doctorObj = tItem.doctor === "A" ? appData.doctors.A : appData.doctors.B;
+      const doctorName = translateClinical(doctorObj.name);
+      return `
         <div class="timeline-card" id="tl-${tItem.id}" style="display:flex;gap:16px;align-items:flex-start;">
           <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;">
-            <div style="width:38px;height:38px;border-radius:50%;background:${tItem.doctor==='A'?'var(--blue-600)':'var(--teal-500)'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800">${idx+1}</div>
+            <div style="width:38px;height:38px;border-radius:50%;background:${tItem.doctor === 'A' ? 'var(--blue-600)' : 'var(--teal-500)'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800">${idx + 1}</div>
           </div>
           <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
               <span style="font-size:12px;font-weight:700;color:var(--ink-muted)">📅 ${tItem.date}</span>
-              <span style="font-size:11px;background:${tItem.doctor==='A'?'var(--blue-100)':'#d1faf0'};color:${tItem.doctor==='A'?'var(--blue-700)':'var(--teal-700)'};border-radius:20px;padding:2px 10px;font-weight:700;">${doctorName}</span>
+              <span style="font-size:11px;background:${tItem.doctor === 'A' ? 'var(--blue-100)' : '#d1faf0'};color:${tItem.doctor === 'A' ? 'var(--blue-700)' : 'var(--teal-700)'};border-radius:20px;padding:2px 10px;font-weight:700;">${doctorName}</span>
               <span class="outcome-pill ${outcomeClass(tItem.outcome)}">${outcomeIcon(tItem.outcome)} ${translateOutcome(tItem.outcome)}</span>
             </div>
             <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;">${translateClinical(tItem.title)}</div>
@@ -1488,7 +1592,7 @@ function renderTimeline() {
           </div>
         </div>
         `;
-      }).join("");
+    }).join("");
 
   const addBtn = document.getElementById("addTimelineBtn");
   if (addBtn) addBtn.classList.toggle("hidden", !isDoctor());
@@ -1535,7 +1639,7 @@ function renderReport(key) {
       ${doctorTimeline.map((visit, i) => `
         <div style="background:var(--blue-50);border-radius:14px;border:1px solid var(--blue-100);padding:15px 18px;margin-bottom:10px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
-            <span style="background:var(--blue-600);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${i+1}</span>
+            <span style="background:var(--blue-600);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${i + 1}</span>
             <span style="font-weight:700;color:var(--ink);font-size:13px">📅 ${esc(visit.date)}</span>
             <span class="outcome-pill ${outcomeClass(visit.outcome)}">${outcomeIcon(visit.outcome)} ${translateOutcome(visit.outcome)}</span>
           </div>
@@ -1816,6 +1920,7 @@ function saveMedicine(key, existingId) {
   // Update net outcome automatically
   updateNetOutcome(key);
   saveData();
+  syncMedicineToBackend(med, key);
   closeModal();
   renderDoctorSection(key);
   renderNavBadges();
@@ -2187,10 +2292,10 @@ function renderRecords(filter = currentDocFilter) {
       <div class="record-card">
         <div class="record-card-img-wrap" onclick="openDocViewer('${doc.id}')">
           <span class="record-card-cat-badge ${catInfo.badgeCls}">${catInfo.icon} ${catLabel}</span>
-          ${isImage 
-            ? `<img src="${doc.fileData}" class="record-card-img" alt="${esc(doc.title)}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'180\\' viewBox=\\'0 0 300 180\\'><rect fill=\\'%230f172a\\' width=\\'300\\' height=\\'180\\'/><text fill=\\'%2394a3b8\\' font-size=\\'16\\' x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\'>Medical Scan</text></svg>'">`
-            : `<div class="record-card-pdf-icon">📄<span style="font-size:12px;color:#cbd5e1">${esc(doc.fileName || "Document")}</span></div>`
-          }
+          ${isImage
+        ? `<img src="${doc.fileData}" class="record-card-img" alt="${esc(doc.title)}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'180\\' viewBox=\\'0 0 300 180\\'><rect fill=\\'%230f172a\\' width=\\'300\\' height=\\'180\\'/><text fill=\\'%2394a3b8\\' font-size=\\'16\\' x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\'>Medical Scan</text></svg>'">`
+        : `<div class="record-card-pdf-icon">📄<span style="font-size:12px;color:#cbd5e1">${esc(doc.fileName || "Document")}</span></div>`
+      }
         </div>
         <div class="record-card-body">
           <div class="record-card-title">${esc(doc.title)}</div>
@@ -2311,7 +2416,7 @@ function processSelectedDocFile(file) {
   }
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const dataUrl = e.target.result;
     pendingDocUpload = {
       fileData: dataUrl,
@@ -2332,10 +2437,10 @@ function processSelectedDocFile(file) {
       const isImg = file.type.startsWith("image/");
       previewWrap.innerHTML = `
         <div class="preview-container">
-          ${isImg 
-            ? `<img src="${dataUrl}" class="preview-img" alt="Document Preview">`
-            : `<div class="record-card-pdf-icon">📄<span style="font-size:14px;color:#fff">${esc(file.name)}</span></div>`
-          }
+          ${isImg
+          ? `<img src="${dataUrl}" class="preview-img" alt="Document Preview">`
+          : `<div class="record-card-pdf-icon">📄<span style="font-size:14px;color:#fff">${esc(file.name)}</span></div>`
+        }
           <button type="button" class="preview-remove-btn" onclick="removePendingDoc()">✕ Remove</button>
         </div>
         <div style="font-size:12px;color:var(--ink-muted);margin-bottom:14px;text-align:center">
@@ -2386,7 +2491,7 @@ function createDocPlaceholderSVG(category, title) {
   const label = t(cat.labelKey, cat.defaultLabel);
   const color1 = category === "xray" ? "#1e3a8a" : category === "blood" ? "#991b1b" : category === "mri" ? "#581c87" : category === "prescription" ? "#92400e" : "#065f46";
   const color2 = category === "xray" ? "#0f172a" : category === "blood" ? "#450a0a" : category === "mri" ? "#2e1065" : category === "prescription" ? "#451a03" : "#022c22";
-  
+
   const cleanTitle = (title || "Medical Document").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
     <defs>
@@ -2471,10 +2576,10 @@ function openDocViewer(id) {
 
   const modalHtml = `
     <div class="lightbox-img-wrap">
-      ${isImage 
-        ? `<img src="${doc.fileData}" class="lightbox-img" alt="${esc(doc.title)}">`
-        : `<div class="record-card-pdf-icon" style="font-size:60px">📄<div style="font-size:16px;margin-top:10px">${esc(doc.fileName)}</div></div>`
-      }
+      ${isImage
+      ? `<img src="${doc.fileData}" class="lightbox-img" alt="${esc(doc.title)}">`
+      : `<div class="record-card-pdf-icon" style="font-size:60px">📄<div style="font-size:16px;margin-top:10px">${esc(doc.fileName)}</div></div>`
+    }
     </div>
     <div class="lightbox-details">
       <div class="lightbox-title-row">
@@ -3669,26 +3774,26 @@ function translateSchedule(sch) {
   var res = String(sch);
   if (currentLang === "hi") {
     res = res.replace(/Morning/gi, "सुबह")
-             .replace(/Night/gi, "रात")
-             .replace(/Afternoon/gi, "दोपहर")
-             .replace(/Evening/gi, "शाम")
-             .replace(/\(after food\)/gi, "(खाने के बाद)")
-             .replace(/\(before food\)/gi, "(खाने से पहले)")
-             .replace(/once daily/gi, "दिन में एक बार")
-             .replace(/twice daily/gi, "दिन में दो बार")
-             .replace(/30 days/gi, "30 दिन")
-             .replace(/Ongoing/gi, "चल रही है");
+      .replace(/Night/gi, "रात")
+      .replace(/Afternoon/gi, "दोपहर")
+      .replace(/Evening/gi, "शाम")
+      .replace(/\(after food\)/gi, "(खाने के बाद)")
+      .replace(/\(before food\)/gi, "(खाने से पहले)")
+      .replace(/once daily/gi, "दिन में एक बार")
+      .replace(/twice daily/gi, "दिन में दो बार")
+      .replace(/30 days/gi, "30 दिन")
+      .replace(/Ongoing/gi, "चल रही है");
   } else if (currentLang === "mr") {
     res = res.replace(/Morning/gi, "सकाळ")
-             .replace(/Night/gi, "रात्र")
-             .replace(/Afternoon/gi, "दुपार")
-             .replace(/Evening/gi, "संध्याकाळ")
-             .replace(/\(after food\)/gi, "(जेवणानंतर)")
-             .replace(/\(before food\)/gi, "(जेवणापूर्वी)")
-             .replace(/once daily/gi, "दिवसातून एकदा")
-             .replace(/twice daily/gi, "दिवसातून दोनदा")
-             .replace(/30 days/gi, "30 दिवस")
-             .replace(/Ongoing/gi, "चालू आहे");
+      .replace(/Night/gi, "रात्र")
+      .replace(/Afternoon/gi, "दुपार")
+      .replace(/Evening/gi, "संध्याकाळ")
+      .replace(/\(after food\)/gi, "(जेवणानंतर)")
+      .replace(/\(before food\)/gi, "(जेवणापूर्वी)")
+      .replace(/once daily/gi, "दिवसातून एकदा")
+      .replace(/twice daily/gi, "दिवसातून दोनदा")
+      .replace(/30 days/gi, "30 दिवस")
+      .replace(/Ongoing/gi, "चालू आहे");
   }
   return res;
 }
@@ -3808,9 +3913,10 @@ function closeLoginLangMenu() {
   if (btn) btn.classList.remove("open");
 }
 
-// Apply saved language on page load
+// Apply saved language & initialize live backend connection on page load
 document.addEventListener("DOMContentLoaded", () => {
   if (currentLang) setLanguage(currentLang);
+  checkBackendConnection().then(() => syncFromBackend());
 });
 
 /* ═══════════════════════════════════════════════════════════
@@ -3877,11 +3983,11 @@ function exportPDF() {
 
   // Category icon & color map for PDF badges
   var CAT_STYLE = {
-    xray:         { icon: "🩻", label: "X-Ray",           bg: "#e8f4ff", color: "#1d56a0" },
-    blood:        { icon: "🩸", label: "Blood Report",     bg: "#fff0f0", color: "#c0392b" },
-    mri:          { icon: "🧠", label: "MRI / CT Scan",    bg: "#f5f0ff", color: "#7c3aed" },
-    prescription: { icon: "📄", label: "Prescription",      bg: "#f0fff4", color: "#18875d" },
-    other:        { icon: "📋", label: "Medical Document",  bg: "#fffbeb", color: "#b7791f" }
+    xray: { icon: "🩻", label: "X-Ray", bg: "#e8f4ff", color: "#1d56a0" },
+    blood: { icon: "🩸", label: "Blood Report", bg: "#fff0f0", color: "#c0392b" },
+    mri: { icon: "🧠", label: "MRI / CT Scan", bg: "#f5f0ff", color: "#7c3aed" },
+    prescription: { icon: "📄", label: "Prescription", bg: "#f0fff4", color: "#18875d" },
+    other: { icon: "📋", label: "Medical Document", bg: "#fffbeb", color: "#b7791f" }
   };
 
   // Build uploaded documents section — shows actual images + metadata grid
