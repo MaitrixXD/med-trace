@@ -7,6 +7,25 @@ const API_BASE_URL = (window.location.hostname === 'localhost' || window.locatio
   ? 'http://localhost:5000/api'
   : 'https://med-trace-chso.onrender.com/api';
 
+/* ─────────────────────────────────────────────
+   SUPABASE AUTHENTICATION ENGINE
+───────────────────────────────────────────── */
+const SUPABASE_URL = "https://zyrrueipvunyvavjwugy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_cWH0RODSTl-xKSs1YF4SAg_byUIMGAc";
+
+let supabaseClient = null;
+function initSupabase() {
+  if (typeof window.supabase !== "undefined" && window.supabase.createClient) {
+    try {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log("⚡ Supabase Auth client initialized successfully:", SUPABASE_URL);
+    } catch (e) {
+      console.warn("Supabase init error:", e);
+    }
+  }
+}
+initSupabase();
+
 let backendConnected = false;
 
 async function checkBackendConnection() {
@@ -622,9 +641,9 @@ function switchLoginMethod(role, method) {
 }
 
 /* ─────────────────────────────────────────────
-   ID & PASSWORD AUTHENTICATION
+   ID & PASSWORD AUTHENTICATION (Supabase + Demo)
 ───────────────────────────────────────────── */
-function loginPatient() {
+async function loginPatient() {
   hideLoginAlerts();
   const idEl = document.getElementById("patientId");
   const pwEl = document.getElementById("patientPw");
@@ -632,7 +651,7 @@ function loginPatient() {
   const pw = pwEl ? pwEl.value : "";
 
   if (!id) {
-    showLoginAlert("patient", "⚠️ Please enter your Patient ID (e.g. PAT-001).");
+    showLoginAlert("patient", "⚠️ Please enter your Patient ID or Supabase Email.");
     shakeFocus("patientId");
     return;
   }
@@ -644,6 +663,30 @@ function loginPatient() {
 
   setBtnLoading("loginPatientBtn", true, "Sign in as Patient", "Verifying credentials...");
 
+  // Try Supabase auth if an email is entered
+  if (supabaseClient && supabaseClient.auth && id.includes("@")) {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: id,
+        password: pw
+      });
+      if (!error && data && data.user) {
+        session.role = "patient";
+        session.loggedIn = true;
+        session.supabaseUser = data.user;
+        setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
+        startApp();
+        showToast(`🎉 Logged in via Supabase: ${data.user.email}`, "success");
+        return;
+      } else if (error) {
+        console.warn("Supabase auth response:", error.message);
+      }
+    } catch (e) {
+      console.warn("Supabase signIn error:", e);
+    }
+  }
+
+  // Demo credential fallback
   setTimeout(() => {
     if (id === appData.patient.id && pw === appData.patient.password) {
       session.role = "patient";
@@ -653,22 +696,22 @@ function loginPatient() {
       showToast(`🎉 Welcome back, ${appData.patient.name}!`, "success");
     } else {
       setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
-      showLoginAlert("patient", "❌ Invalid Patient ID or Password. Demo: PAT-001 / patient123");
+      showLoginAlert("patient", "❌ Invalid credentials. Demo: PAT-001 / patient123 (or Supabase Email).");
       showToast("❌ Invalid Patient ID or Password", "error");
       shakeFocus("patientPw");
     }
-  }, 350);
+  }, 300);
 }
 
-function loginDoctor() {
+async function loginDoctor() {
   hideLoginAlerts();
   const idEl = document.getElementById("doctorId");
   const pwEl = document.getElementById("doctorPw");
-  const id = idEl ? idEl.value.trim().toUpperCase() : "";
+  const id = idEl ? idEl.value.trim() : "";
   const pw = pwEl ? pwEl.value : "";
 
   if (!id) {
-    showLoginAlert("doctor", "⚠️ Please enter your Doctor ID (e.g. DR-A or DR-B).");
+    showLoginAlert("doctor", "⚠️ Please enter your Doctor ID or Supabase Email.");
     shakeFocus("doctorId");
     return;
   }
@@ -680,14 +723,39 @@ function loginDoctor() {
 
   setBtnLoading("loginDoctorBtn", true, "Sign in as Doctor", "Accessing Clinical Suite...");
 
+  // Try Supabase auth if an email is entered
+  if (supabaseClient && supabaseClient.auth && id.includes("@")) {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: id,
+        password: pw
+      });
+      if (!error && data && data.user) {
+        const isB = id.toLowerCase().includes("b") || id.toLowerCase().includes("meena");
+        session.role = isB ? "doctorB" : "doctorA";
+        session.loggedIn = true;
+        session.supabaseUser = data.user;
+        setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
+        startApp();
+        showToast(`🎉 Logged in via Supabase as ${session.role === "doctorA" ? "Dr. Rajesh Verma" : "Dr. Meena Kapoor"}!`, "success");
+        return;
+      } else if (error) {
+        console.warn("Supabase auth response:", error.message);
+      }
+    } catch (e) {
+      console.warn("Supabase signIn error:", e);
+    }
+  }
+
   setTimeout(() => {
-    if (id === "DR-A" && pw === appData.doctors.A.password) {
+    const upperId = id.toUpperCase();
+    if (upperId === "DR-A" && pw === appData.doctors.A.password) {
       session.role = "doctorA";
       session.loggedIn = true;
       setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
       startApp();
       showToast(`🎉 Welcome, ${appData.doctors.A.name}!`, "success");
-    } else if (id === "DR-B" && pw === appData.doctors.B.password) {
+    } else if (upperId === "DR-B" && pw === appData.doctors.B.password) {
       session.role = "doctorB";
       session.loggedIn = true;
       setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
@@ -695,11 +763,11 @@ function loginDoctor() {
       showToast(`🎉 Welcome, ${appData.doctors.B.name}!`, "success");
     } else {
       setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
-      showLoginAlert("doctor", "❌ Invalid Doctor credentials. Demo: DR-A (docA123) or DR-B (docB123)");
+      showLoginAlert("doctor", "❌ Invalid Doctor credentials. Demo: DR-A (docA123) or DR-B (docB123) or Supabase Email.");
       showToast("❌ Invalid Doctor ID or Password", "error");
       shakeFocus("doctorPw");
     }
-  }, 350);
+  }, 300);
 }
 
 /* ─────────────────────────────────────────────
@@ -1140,6 +1208,9 @@ function submitForgotPasswordReset() {
 
 
 function logout() {
+  if (supabaseClient && supabaseClient.auth) {
+    supabaseClient.auth.signOut().catch(e => console.warn("Supabase signout:", e));
+  }
   session = { role: null, loggedIn: false };
   document.getElementById("app").classList.add("hidden");
   document.getElementById("loginPage").classList.remove("hidden");
@@ -3913,11 +3984,37 @@ function closeLoginLangMenu() {
   if (btn) btn.classList.remove("open");
 }
 
-// Apply saved language & initialize live backend connection on page load
+// Apply saved language, check Supabase session & initialize live backend connection on page load
 document.addEventListener("DOMContentLoaded", () => {
   if (currentLang) setLanguage(currentLang);
+  initSupabase();
+  checkSupabaseSession();
   checkBackendConnection().then(() => syncFromBackend());
 });
+
+async function checkSupabaseSession() {
+  if (!supabaseClient || !supabaseClient.auth) return;
+  try {
+    const { data: { session: existingSession } } = await supabaseClient.auth.getSession();
+    if (existingSession && existingSession.user) {
+      console.log("⚡ Active Supabase session detected:", existingSession.user.email);
+      const email = (existingSession.user.email || "").toLowerCase();
+      if (email.includes("doctora") || email.includes("dra")) {
+        session.role = "doctorA";
+      } else if (email.includes("doctorb") || email.includes("drb")) {
+        session.role = "doctorB";
+      } else {
+        session.role = "patient";
+      }
+      session.loggedIn = true;
+      session.supabaseUser = existingSession.user;
+      startApp();
+      showToast(`🎉 Welcome back! (Supabase: ${existingSession.user.email})`, "success");
+    }
+  } catch (err) {
+    console.warn("Supabase session restore:", err);
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════
    PDF EXPORT — One-click Full Patient Report
