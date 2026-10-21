@@ -757,10 +757,39 @@ async function loginPatient() {
   // Try Supabase auth if an email is entered
   if (supabaseClient && supabaseClient.auth && id.includes("@")) {
     try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
+      let { data, error } = await supabaseClient.auth.signInWithPassword({
         email: id,
         password: pw
       });
+
+      // Auto sign-up in Supabase if the user does not exist yet
+      if (error && (error.message.toLowerCase().includes("invalid login credentials") || error.status === 400)) {
+        console.log("User not found in Supabase. Attempting auto-registration for:", id);
+        const signUpRes = await supabaseClient.auth.signUp({
+          email: id,
+          password: pw,
+          options: { data: { role: "patient", name: appData.patient.name } }
+        });
+
+        if (!signUpRes.error && signUpRes.data && signUpRes.data.user) {
+          if (signUpRes.data.session) {
+            data = signUpRes.data;
+            error = null;
+          } else {
+            setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
+            showLoginAlert("patient", "📩 New account created in Supabase! If email confirmation is required, verify your inbox, or click the 🧑 Aarav (PAT-001) demo pill below.");
+            showToast("Account created in Supabase! Check email.", "info");
+            return;
+          }
+        } else if (signUpRes.error) {
+          setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
+          showLoginAlert("patient", `❌ Supabase: ${signUpRes.error.message} (Demo alternative: Use 🧑 Aarav pill below)`);
+          showToast(`❌ ${signUpRes.error.message}`, "error");
+          shakeFocus("patientPw");
+          return;
+        }
+      }
+
       if (!error && data && data.user) {
         session.role = "patient";
         session.loggedIn = true;
@@ -770,7 +799,11 @@ async function loginPatient() {
         showToast(`🎉 Logged in via Supabase: ${data.user.email}`, "success");
         return;
       } else if (error) {
-        console.warn("Supabase auth response:", error.message);
+        setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
+        showLoginAlert("patient", `❌ Supabase Auth: ${error.message}`);
+        showToast(`❌ ${error.message}`, "error");
+        shakeFocus("patientPw");
+        return;
       }
     } catch (e) {
       console.warn("Supabase signIn error:", e);
@@ -787,8 +820,8 @@ async function loginPatient() {
       showToast(`🎉 Welcome back, ${appData.patient.name}!`, "success");
     } else {
       setBtnLoading("loginPatientBtn", false, "Sign in as Patient");
-      showLoginAlert("patient", "❌ Invalid credentials. Demo: PAT-001 / patient123 (or Supabase Email).");
-      showToast("❌ Invalid Patient ID or Password", "error");
+      showLoginAlert("patient", "❌ Invalid credentials. Use 1-Click Demo pill below or valid Supabase email/password.");
+      showToast("❌ Invalid Credentials", "error");
       shakeFocus("patientPw");
     }
   }, 300);
@@ -817,10 +850,32 @@ async function loginDoctor() {
   // Try Supabase auth if an email is entered
   if (supabaseClient && supabaseClient.auth && id.includes("@")) {
     try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
+      let { data, error } = await supabaseClient.auth.signInWithPassword({
         email: id,
         password: pw
       });
+
+      if (error && (error.message.toLowerCase().includes("invalid login credentials") || error.status === 400)) {
+        const isB = id.toLowerCase().includes("b") || id.toLowerCase().includes("meena");
+        const docRole = isB ? "doctorB" : "doctorA";
+        const docName = isB ? appData.doctors.B.name : appData.doctors.A.name;
+        const signUpRes = await supabaseClient.auth.signUp({
+          email: id,
+          password: pw,
+          options: { data: { role: docRole, name: docName } }
+        });
+        if (!signUpRes.error && signUpRes.data && signUpRes.data.user) {
+          if (signUpRes.data.session) {
+            data = signUpRes.data;
+            error = null;
+          } else {
+            setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
+            showLoginAlert("doctor", "📩 Doctor account created in Supabase! If confirmation is on, check your inbox or use 1-Click Dr. A pill.");
+            return;
+          }
+        }
+      }
+
       if (!error && data && data.user) {
         const isB = id.toLowerCase().includes("b") || id.toLowerCase().includes("meena");
         session.role = isB ? "doctorB" : "doctorA";
@@ -831,7 +886,11 @@ async function loginDoctor() {
         showToast(`🎉 Logged in via Supabase as ${session.role === "doctorA" ? "Dr. Rajesh Verma" : "Dr. Meena Kapoor"}!`, "success");
         return;
       } else if (error) {
-        console.warn("Supabase auth response:", error.message);
+        setBtnLoading("loginDoctorBtn", false, "Sign in as Doctor");
+        showLoginAlert("doctor", `❌ Supabase: ${error.message}`);
+        showToast(`❌ ${error.message}`, "error");
+        shakeFocus("doctorPw");
+        return;
       }
     } catch (e) {
       console.warn("Supabase signIn error:", e);
