@@ -8,14 +8,20 @@ const API_BASE_URL = (window.location.hostname === 'localhost' || window.locatio
   : 'https://med-trace-chso.onrender.com/api';
 
 /* ─────────────────────────────────────────────
-   SUPABASE AUTHENTICATION ENGINE
+   SUPABASE AUTHENTICATION ENGINE (Step 4 & 5)
 ───────────────────────────────────────────── */
 const SUPABASE_URL = "https://zyrrueipvunyvavjwugy.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_cWH0RODSTl-xKSs1YF4SAg_byUIMGAc";
 
-let supabaseClient = null;
+// Initialize Supabase Client
+const supabase = (typeof window.supabase !== "undefined" && window.supabase.createClient)
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+let supabaseClient = supabase;
+
 function initSupabase() {
-  if (typeof window.supabase !== "undefined" && window.supabase.createClient) {
+  if (!supabaseClient && typeof window.supabase !== "undefined" && window.supabase.createClient) {
     try {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       console.log("⚡ Supabase Auth client initialized successfully:", SUPABASE_URL);
@@ -25,6 +31,91 @@ function initSupabase() {
   }
 }
 initSupabase();
+
+// Supabase Email & Password Sign In Handler
+async function handleSupabaseLogin(email, password, role = "patient") {
+  const client = supabase || supabaseClient;
+  if (!client) {
+    console.warn("Supabase SDK not loaded");
+    return { success: false, error: "Supabase not loaded" };
+  }
+
+  const { data, error } = await client.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    showToast(`❌ Authentication failed: ${error.message}`, "error");
+    return { success: false, error: error.message };
+  }
+
+  const user = data.user;
+  const userRole = (user && user.user_metadata && user.user_metadata.role) || role;
+
+  session.role = userRole;
+  session.loggedIn = true;
+  session.supabaseUser = user;
+
+  localStorage.setItem("medtrace_supabase_user", JSON.stringify({
+    id: user.id,
+    email: user.email,
+    role: userRole
+  }));
+
+  startApp();
+  showToast(`🎉 Logged in via Supabase as ${userRole}!`, "success");
+  return { success: true, user: user };
+}
+
+// Supabase Phone OTP Authentication
+async function sendPhoneOTP(phoneNumber) {
+  const client = supabase || supabaseClient;
+  if (!client) return { error: "Supabase client unavailable" };
+
+  const { data, error } = await client.auth.signInWithOtp({
+    phone: phoneNumber
+  });
+  if (error) {
+    showToast(`❌ OTP send failed: ${error.message}`, "error");
+    return { error: error.message };
+  }
+  showToast(`📲 OTP dispatched via Supabase to ${phoneNumber}`, "success");
+  return { data };
+}
+
+async function verifyPhoneOTP(phoneNumber, token) {
+  const client = supabase || supabaseClient;
+  if (!client) return { error: "Supabase client unavailable" };
+
+  const { data: { session: otpSession }, error } = await client.auth.verifyOtp({
+    phone: phoneNumber,
+    token: token,
+    type: "sms"
+  });
+
+  if (error) {
+    showToast(`❌ OTP verification error: ${error.message}`, "error");
+    return { error: error.message };
+  }
+
+  session.loggedIn = true;
+  session.role = "patient";
+  startApp();
+  showToast("🎉 Phone OTP verified via Supabase!", "success");
+  return { session: otpSession };
+}
+
+// Supabase Sign Out
+async function logoutUser() {
+  const client = supabase || supabaseClient;
+  if (client) {
+    await client.auth.signOut().catch(e => console.warn("Supabase signout:", e));
+  }
+  localStorage.removeItem("medtrace_supabase_user");
+  session.loggedIn = false;
+  location.reload();
+}
 
 let backendConnected = false;
 
