@@ -4,209 +4,102 @@ MED-TRACE is a unified, intelligent healthcare platform designed to bridge the c
 
 ---
 
-## 📖 Table of Contents
-- [About the Project](#-about-the-project)
-- [System Architecture & Tech Stack](#-system-architecture--tech-stack)
-- [Core UI Pages & Significant Features](#-core-ui-pages--significant-features)
-  - [1. Authentication & Onboarding Gate](#1-authentication--onboarding-gate)
-  - [2. Global Topbar & Navigation System](#2-global-topbar--navigation-system)
-  - [3. Patient & Doctor Dashboard](#3-patient--doctor-dashboard-dashboard)
-  - [4. Doctor Treatment Records (Doctor A & Doctor B)](#4-doctor-treatment-records-doctora--doctorb)
-  - [5. Clinical Handover Mode (Flagship USP)](#5-clinical-handover-mode-flagship-usp)
-  - [6. Medical History & Longitudinal Background](#6-medical-history--longitudinal-background-history)
-  - [7. Chronological Treatment Timeline](#7-chronological-treatment-timeline-timeline)
-  - [8. Before vs. After Reports & Analytics](#8-before-vs-after-reports--analytics-reports)
-  - [9. Medical Records & Diagnostic Scans Vault](#9-medical-records--diagnostic-scans-vault-records)
-  - [10. Patient Profile & Emergency Registry](#10-patient-profile--emergency-registry-profile)
-  - [11. Instant Pharmacy & Medicine Store](#11-instant-pharmacy--medicine-store-pharmacy)
-  - [12. Real-Time Order Tracking](#12-real-time-order-tracking-orders)
-  - [13. Medicine Reminders & Audio Notification Engine](#13-medicine-reminders--audio-notification-engine-reminders)
-  - [14. "Ask My History" — Clinical Intelligence Assistant](#14-ask-my-history--clinical-intelligence-assistant)
-- [Demo Credentials](#-demo-credentials)
-- [Getting Started & Local Development](#-getting-started--local-development)
-- [Security & Compliance Highlights](#-security--compliance-highlights)
+## 📌 Executive Summary & Project Overview
 
----
-
-## 💡 About the Project
-
-In modern healthcare, patients frequently consult multiple specialists (e.g., an internal medicine doctor followed by a neurologist). Critical medical data often gets lost in transition:
-- Previous drug reactions and side effects are forgotten.
-- Conflicting drugs are co-prescribed.
-- Physical diagnostic scans and paper prescriptions get misplaced.
-- Patients struggle to adhere to complex medication schedules.
-
-**MED-TRACE solves this clinical fragmentation** by offering a role-based, real-time medical dossier that tracks:
-1. **Prescription Lifecycles**: Exact dosages, timing schedules, and documented outcome notes.
-2. **Clinical Handovers**: Instant briefing syntheses between consulting physicians.
-3. **Diagnostic Scans Repository**: High-resolution storage for X-Rays, MRIs, ECGs, and blood reports.
-4. **Patient Medication Adherence**: Synchronized web notifications and acoustic chime alerts.
-5. **Integrated Pharmacy**: 30–60 minute medicine delivery with stock monitoring and live order tracking.
-
----
-
-## 🛠 System Architecture & Tech Stack
-
-MED-TRACE is built with clean, standards-compliant web technologies ensuring high performance, zero build-step overhead, and offline resilience.
-
-| Layer | Technologies & Implementations |
+| Attribute | Details |
 | :--- | :--- |
-| **Frontend Core** | **HTML5** (Semantic structure, ARIA accessibility, micro-data) |
-| **Logic & Modules** | **Vanilla JavaScript (ES6+)** organized into modular engines:<br>• `script.js` — Core state store, CRUD handlers, seed database, role-based access control.<br>• `features.js` — Handover generator, clinical detector, "Ask My History" search assistant.<br>• `pharmacy.js` — Pharmacy stock management, order dispatch, cart & pricing calculation.<br>• `reminders.js` — Audio synthesis chime alert, dosage scheduling & reminder loop. |
-| **Styling & UI** | **Vanilla CSS3** (`style.css`, `features.css`, `Med Trace.css`)<br>• Custom Design Token System (HSL medical color palette, dark/light clinical tones).<br>• Glassmorphism effects, fluid CSS Grid & Flexbox layouts.<br>• Micro-animations: Animated SVG ECG telemetry waveform, ambient glowing orbs. |
-| **PWA & Offline** | **Progressive Web App (PWA)**:<br>• `sw.js` — Service Worker caching strategy for offline availability and instant updates.<br>• `manifest.json` — Standalone mobile/desktop app manifest with maskable icons. |
-| **Audio Engine** | **Web Audio API** (`AudioContext`): Synthesizes pleasant dual-frequency harmonic alert chimes (E5: 659.25Hz & A5: 880Hz) without external audio file dependencies. |
-| **Notifications** | **Web Notifications API**: Native desktop and mobile push notifications for scheduled doses. |
-| **Internationalization** | **Multi-Language Engine (i18n)** supporting real-time switching between **English (EN)**, **Hindi (हिंदी)**, and **Marathi (मराठी)**. |
-| **Persistence** | **Browser `localStorage`** with fallback seed data for zero-config offline demonstrations and persistence across reloads. |
-| **Document Export** | **Print CSS Engine (`@media print`)**: Formats high-fidelity clinical briefing PDFs and doctor handover sheets. |
+| **Project Name** | **MED-TRACE (Medical Treatment & Continuity Engine)** |
+| **Primary Goal** | Eliminate clinical data fragmentation and adverse drug interactions across multi-specialist handovers. |
+| **Target Users** | **Patients** (personal health tracking, medication alarms, pharmacy) and **Doctors / Clinicians** (clinical records, handover briefs, diagnostics, timeline). |
+| **Live Frontend** | [https://med-trace-beta.vercel.app](https://med-trace-beta.vercel.app) |
+| **Live Backend API** | [https://med-trace-chso.onrender.com/api](https://med-trace-chso.onrender.com/api) |
+| **Authentication Service** | Supabase Auth (`https://zyrrueipvunyvavjwugy.supabase.co`) + Instant Role-Based Demo Bypass |
+| **Source Code Repo** | [https://github.com/MaitrixXD/MED-TRACE](https://github.com/MaitrixXD/MED-TRACE) |
 
 ---
 
-## 🖥 Core UI Pages & Significant Features
+## 🛠 Complete Technology Stack
 
-### 1. Authentication & Onboarding Gate
-- **Dual-Persona Sign-In**: Dedicated tabs for **Patient Login** and **Doctor Login**.
-- **Multi-Method Verification**:
-  - Standard Password Login.
-  - **Phone OTP Verification**: Integrated mobile number input (`+91`), simulated SMS delivery countdown timer, and 1-click **Auto-fill** for streamlined testing.
-- **1-Click Instant Demo Pills**: Direct bypass buttons for rapid stakeholder evaluation:
-  - 🧑 `Aarav Sharma` (Patient · PAT-001)
-  - 🩺 `Dr. Rajesh Verma` (Doctor A · Internal Medicine / Cardiology · DR-A)
-  - 🩺 `Dr. Meena Kapoor` (Doctor B · Neurology · DR-B)
-- **Visuals**: Animated clinical telemetry ECG baseline, ambient glowing light meshes, and compliance trust badges (HIPAA-ready, 256-bit AES encryption markers).
-
----
-
-### 2. Global Topbar & Navigation System
-- **Language Switcher Dropdown**: Instant dynamic translation across English, Hindi, and Marathi.
-- **PDF Export Button**: Compiles the patient's entire medical record into a clean, printable medical summary document.
-- **Role-Aware User Badge**: Displays the logged-in user's avatar, full name, and credential tag (e.g., *Patient*, *Internal Medicine — MBBS, MD*).
-- **Responsive Sidebar**: Collapsible menu with live dynamic badges highlighting pending reminders, active pharmacy orders, and uploaded scans.
+| Layer / Domain | Technology | Implementation & Role |
+| :--- | :--- | :--- |
+| **Frontend Framework** | **Vanilla HTML5 & ES6+ JavaScript** | Zero-bundle-overhead, lightning-fast execution, native browser API compliance. |
+| **Modular Logic** | `script.js` | Core application state controller, Supabase auth integration, CRUD operations, backend sync. |
+| | `features.js` | Clinical Handover engine, allergy conflict detector, "Ask My History" natural query search. |
+| | `pharmacy.js` | Medicine inventory filtering, cart calculations, order checkout, live tracking milestones. |
+| | `reminders.js` | Web Audio synthesizer chime, dosage countdowns, push alert dispatcher. |
+| **Styling & Design System** | **Vanilla CSS3** | Custom clinical HSL design tokens, glassmorphism, responsive grid/flexbox, print media styles (`@media print`). |
+| **Backend & REST API** | **Node.js + Express.js** | Deployed on **Render** (`https://med-trace-chso.onrender.com/api`). Exposes endpoints for patient data, prescriptions, doctors, timeline, and pharmacy. |
+| **Authentication Engine** | **Supabase Auth (v2 SDK)** | Cloud-managed authentication supporting Email/Password and SMS Phone OTP verification. |
+| **Client Storage & Cache** | **Browser `localStorage`** | Offline-first persistence via key `medtrace_app_data_v1`, keeping user state across sessions and network drops. |
+| **PWA & Offline Worker** | **Service Worker (`sw.js`)** | Caches application shell and clinical assets; supports Progressive Web App installation on mobile and desktop. |
+| **Audio Notification Engine** | **Web Audio API (`AudioContext`)** | In-browser dual harmonic frequency chime synthesis (E5: 659.25Hz, A5: 880Hz) with zero external media files. |
+| **Push Notifications** | **HTML5 Web Notifications API** | Native operating system desktop and mobile alert notifications for medication schedules. |
+| **Internationalization (i18n)** | Custom JavaScript Dictionary | Instant client-side localization across **English (EN)**, **Hindi (हिंदी)**, and **Marathi (मराठी)**. |
+| **Hosting & CI/CD** | **Vercel** (Frontend) + **Render** (Backend) | Automatic Git-backed deployments connected to `main` branch. |
 
 ---
 
-### 3. Patient & Doctor Dashboard (`#dashboard`)
-- **Hero Clinical Banner**: Quick shortcut buttons to view prescriptions, medical history, upload scans, or inspect the treatment timeline.
-- **Doctor-Only "Current Status" Card**: Automatically renders for logged-in physicians, highlighting the patient's current treatment phase, ongoing drugs, and last consultation notes.
-- **Important History Alert Bar**: Real-time safety detector that flags high-risk allergies (e.g., *Severe Penicillin Allergy*), chronic illnesses (Hypertension), or surgical histories.
-- **Key Health Metric Stats**:
-  - Total Prescribed Medicines.
-  - Active / Ongoing Medications.
-  - Documented Outcome Efficacy Rate.
-  - Medication Adherence Percentage.
-- **Treatment Summary & Activity Stream**: Split view of ongoing interventions and an immutable chronological audit trail of all recent medical updates.
+## 🗄️ Database & Storage Architecture
+
+### Where is the Data Stored?
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             MED-TRACE DATA TIERS                            │
+├──────────────────────────────┬──────────────────────────────┬───────────────┤
+│ Tier 1: Client Persistence   │ Tier 2: Cloud Backend API    │ Tier 3: Auth  │
+│ Browser `localStorage`       │ Render Express REST API      │ Supabase Auth │
+│ Key: `medtrace_app_data_v1`  │ `https://med-trace-chso...`  │ JWT / OAuth   │
+└──────────────────────────────┴──────────────────────────────┴───────────────┘
+```
+
+1. **Client Storage (`localStorage`)**:
+   - Key: `medtrace_app_data_v1`
+   - Role: Provides **offline-first instant access**, allowing doctors and patients to query and modify records even during network outages.
+2. **Cloud REST Backend (Render)**:
+   - Base URL: `https://med-trace-chso.onrender.com/api`
+   - Role: Centralized API serving synchronized patient dossiers (`/api/patient`), treatment history, doctors, and pharmacy listings.
+3. **Authentication Layer (Supabase)**:
+   - Project URL: `https://zyrrueipvunyvavjwugy.supabase.co`
+   - Role: Stores encrypted user identities, email credentials, phone OTP sessions, and role metadata (`patient` vs `doctor`).
 
 ---
 
-### 4. Doctor Treatment Records (`#doctorA` & `#doctorB`)
-- **Doctor Profile Header**: Displays attending physician's credentials, hospital affiliation, years of experience, and net treatment outcome.
-- **Medicine Cards with Outcome Tracking**:
-  - Detailed drug specifications: Name, dosage, schedule (e.g., Morning 8:00 AM), duration, and date range.
-  - **Documented Clinical Outcomes**: Qualitative review notes detailing symptom reduction, vitals impact, or adverse side effects.
-  - Outcome Status Badges: *Positive*, *Mixed*, or *Needs Review*.
-- **Role-Gated CRUD ("+ Add Medicine")**: Authenticated doctors can add or modify prescribed medicines, specify intake schedules, and append outcome notes.
-- **Phase Outcome Summary**: Aggregated assessment of the therapeutic efficacy under each physician.
+### What Does the Database Store? (Schema Breakdown)
+
+| Data Entity | Storage Location | Schema / Fields Stored | Clinical Significance |
+| :--- | :--- | :--- | :--- |
+| **Patient Profile** | `localStorage` + Backend `/api/patient` | `id`, `name`, `age`, `gender`, `blood`, `phone`, `email`, `address`, `emergencyContact` | Core demographic record and emergency contact routing. |
+| **Medical History** | `appData.history` | `illness`, `surgery`, `accident`, `allergy`, `family`, `ongoing` | Permanent longitudinal background used for allergy and contraindication alerts. |
+| **Doctor Profiles & Credentials** | `appData.doctors.A` & `B` | `id`, `name`, `spec`, `hospital`, `experience`, `phone`, `netOutcome` | Doctor attribution for every prescription change and clinical note. |
+| **Prescription Records** | `appData.doctors[X].meds` | `id`, `name`, `dosage`, `schedule`, `days`, `startDate`, `endDate`, `reason`, `outcome`, `effectNote`, `followupDate` | Tracks drug efficacy (`Improved`, `Mixed`, `Worsened`), dosages, and treatment reasons. |
+| **Treatment Timeline** | `appData.timeline` | `id`, `date`, `title`, `desc`, `outcome`, `doctor` ('A'/'B') | Chronological audit trail of visits, diagnosis shifts, and medicine changes. |
+| **Diagnostic Scans & Vault** | `appData.documents` | `id`, `name`, `type` (X-Ray, MRI, Blood Report, Prescription), `date`, `doctor`, `dataUrl` / `base64`, `notes` | High-resolution medical imaging vault with in-browser lightbox inspection. |
+| **Medicine Reminders** | `appData.reminders` | `id`, `medName`, `dosage`, `time`, `slot` (Morning, Afternoon, Evening, Night), `sound`, `active` | Active schedule for Web Audio chimes and native push notifications. |
+| **Dose Compliance Log** | `appData.takenLog` | Map of `dateKey_reminderId` -> `timestamp` | Tracks whether doses were taken or missed for adherence calculation. |
+| **Pharmacy Inventory** | `appData.pharmacy.inventory` | `id`, `name`, `generic`, `dosage`, `price`, `stock`, `category`, `deliveryTime` | Real-time stock status, low-stock warnings, and pricing. |
+| **Pharmacy Orders** | `appData.pharmacy.orders` | `id`, `items`, `totalAmount`, `status` (Placed -> Confirmed -> Preparing -> Out for Delivery -> Delivered), `timestamp`, `eta` | Live delivery stepper and courier tracking. |
 
 ---
 
-### 5. Clinical Handover Mode (Flagship USP)
-- **Purpose**: Solves doctor-to-doctor transfer loss when a patient moves between medical specialists.
-- **Synthesis Report**: Compiles a comprehensive briefing with one click:
-  - Patient demographics & critical vitals (Blood group, age, emergency contact).
-  - High-priority clinical flags and allergy warnings.
-  - Cross-doctor medicine transition matrix (comparing Doctor A's discontinued regimen with Doctor B's active drugs).
-  - Unresolved symptoms and clinical questions for the incoming physician.
-- **Print & PDF Generation**: Includes a dedicated button to print or export the handover document for physical hospital records.
+## ⚡ Core Features Matrix
 
----
-
-### 6. Medical History & Longitudinal Background (`#history`)
-- **Categorized Clinical History**:
-  - 🩺 **Past Illnesses**: Chronic conditions with diagnosis dates and management status.
-  - 🏥 **Surgeries**: Procedures, dates, technique (e.g., laparoscopic), and recovery metrics.
-  - 🩹 **Accidents & Physical Injuries**: Trauma history and rehabilitation details.
-  - ⚠️ **Allergies**: High-alert allergy documentation (substance, severity, contraindications).
-  - 🧬 **Family History**: Hereditary health risks across parents and relatives.
-  - 💊 **Ongoing Treatments**: Active daily maintenance medications.
-- **Interactive Editing**: Authorized users can edit and update medical background entries.
-
----
-
-### 7. Chronological Treatment Timeline (`#timeline`)
-- **Vertical Visual Milestone Line**: Visualizes the journey from first consultation through subsequent follow-ups.
-- **Event Classification**: Differentiates between initial diagnoses, lab test milestones, medication start dates, adjustments, and clinical reviews.
-- **Interactive Additions**: Allows doctors to log new treatment milestones and doctor-patient check-ins.
-
----
-
-### 8. Before vs. After Reports & Analytics (`#reports`)
-- **Comparative Treatment Analysis**: Tabbed interface comparing patient health metrics under Doctor A vs. Doctor B.
-- **Documented Clinical Metrics**: Tracks measurable indices (e.g., systolic/diastolic blood pressure readings, pulse, headache frequency).
-- **Clinical Governance Disclaimer**: Explicit notice distinguishing between documented follow-up observations and medical claims.
-
----
-
-### 9. Medical Records & Diagnostic Scans Vault (`#records`)
-- **Multi-Category Filter Tabs**:
-  - 🩻 **X-Rays** (e.g., Chest X-Ray, Knee Joint).
-  - 🩸 **Blood Reports** (Complete Blood Count, Lipid Profile).
-  - 🧠 **MRI / CT Scans** (Brain MRI, Spine Scans).
-  - 📄 **Prescriptions** (Signed physical copies).
-  - 📋 **Other Documents** (Discharge summaries, insurance approvals).
-- **Upload Engine**: File input with image preview, custom document naming, date assignment, doctor association, and notes.
-- **Interactive Lightbox View**: Click any uploaded record to open a high-resolution inspection modal.
-
----
-
-### 10. Patient Profile & Emergency Registry (`#profile`)
-- **Demographics Overview**: Full name, Unique Patient ID (`PAT-001`), age, gender, blood group.
-- **Emergency Contact Cards**: Primary contact details, verified phone number, residential address, and email.
-- **Profile Management**: In-app modal to update address, phone, and emergency contact details.
-
----
-
-### 11. Instant Pharmacy & Medicine Store (`#pharmacy`)
-- **Inventory & Stock Management**:
-  - Real-time stock filters: *All Medicines*, *Low Stock*, *Out of Stock*, *Available*.
-  - Prominent **Stock Alert Banner** highlighting urgent restock needs.
-- **Medicine Cards**: Displays brand/generic names, dosages, unit prices (₹ INR), availability badges, and an **"Order Now"** action.
-- **Express 30–60 Minute Delivery**: Order checkout modal with quantity selector, total calculation, delivery address, and payment method selection (UPI, Cash on Delivery, Card).
-- **Nearby Pharmacies Directory**: Live directory listing verified partner medical stores with operating status, distances, and customer ratings.
-
----
-
-### 12. Real-Time Order Tracking (`#orders`)
-- **Live Visual Stepper**: Tracks dispatched medicines through 5 sequential milestones:
-  1. `Order Placed`
-  2. `Confirmed`
-  3. `Preparing`
-  4. `Out for Delivery`
-  5. `Delivered`
-- **Dynamic Delivery ETA**: Displays delivery partner assignments, vehicle badges, and delivery timeframes.
-
----
-
-### 13. Medicine Reminders & Audio Notification Engine (`#reminders`)
-- **Web Audio Chime Alert**: Generates an acoustic synthesizer chime using the browser's Web Audio API (`659.25Hz` + `880Hz`), eliminating external audio file latency.
-- **Browser Push Notifications**: Native desktop notifications notifying the patient when a dose is due.
-- **"Today's Schedule" Grid**: Daily doses grouped by timing:
-  - 🌅 *Morning* (e.g., 8:00 AM)
-  - 🌤️ *Afternoon* (e.g., 1:00 PM)
-  - 🌆 *Evening* (e.g., 6:00 PM)
-  - 🌙 *Night* (e.g., 9:30 PM)
-- **Instant Test Triggers**: Built-in test buttons (e.g., `⚡ Test Morning Dose`) to preview alerts and sound synthesis immediately.
-- **Custom Reminder Scheduler**: Modal to create new recurring medicine alarms with dosage, frequency, and custom sound alerts.
-
----
-
-### 14. "Ask My History" — Clinical Intelligence Assistant
-- **Natural Language Medical Search**: Embedded assistant allowing patients to query their own medical chart.
-- **Example Queries Answered**:
-  - *"What did Doctor A prescribe for my blood pressure?"*
-  - *"Do I have any recorded drug allergies?"*
-  - *"When did I have my appendix surgery?"*
-- **Instant Contextual Answers**: Extracts and presents exact timestamps, dosages, and contraindications directly from stored health records.
+| Feature | Target Persona | What it Does | Technology Used |
+| :--- | :--- | :--- | :--- |
+| **Dual Persona Gate** | Patient & Doctor | Role-based login with separate views for patient personal access and doctor clinical workstation. | Supabase Auth + Demo Pills |
+| **Phone OTP Login** | Both | Passwordless login via SMS code verification with auto-fill testing. | Supabase Phone Auth + SMS simulator |
+| **Clinical Handover Mode** | Doctors (USP) | 1-click synthesis of full patient history, discontinued vs active drugs, and open clinical questions. | `features.js` + `@media print` PDF generator |
+| **Allergy & Conflict Detection** | Doctors & Patient | Real-time banner alert warning physicians about contraindications (e.g. Penicillin allergy). | Context analysis engine in `features.js` |
+| **Prescription Outcome Tracking** | Doctors | Logs whether a medication resulted in *Improved*, *Mixed*, or *Worsened* outcomes with clinical notes. | `script.js` CRUD + State Store |
+| **Visual Treatment Timeline** | Both | Milestone journey mapping every consultation, lab test, and prescription change since first visit. | CSS Grid / Flex Timeline |
+| **Diagnostic Scans Vault** | Both | Multi-category storage for X-Rays, MRIs, Blood Reports, and Prescriptions with modal lightbox. | File API + Base64 LocalStorage |
+| **Before vs After Analytics** | Both | Compares health metrics (e.g., blood pressure, pulse, headache frequency) across Doctor A vs Doctor B. | Comparative metric cards |
+| **Web Audio Chime Alerts** | Patient | Harmonic chime synthesized in-browser when a dose is due without external MP3 files. | Web Audio API (`AudioContext`) |
+| **Push Reminders** | Patient | Scheduled reminders for Morning, Afternoon, Evening, and Night doses with compliance logging. | Web Notifications API |
+| **Instant Pharmacy & Orders** | Patient | 30–60 min medicine ordering with real-time 5-stage delivery stepper. | `pharmacy.js` State Machine |
+| **"Ask My History" Assistant** | Both | Natural language search answering questions about past surgeries, allergies, and prescriptions. | Keyword & semantic matching in `features.js` |
+| **Multi-Language (i18n)** | Both | Instant dynamic switching between English, Hindi, and Marathi across the entire UI. | Custom DOM i18n switcher |
+| **PWA Offline Support** | Both | Standalone mobile and desktop app capability that works seamlessly offline. | Service Worker (`sw.js`) + Manifest |
 
 ---
 
@@ -216,42 +109,44 @@ MED-TRACE is pre-configured with realistic clinical seed data:
 
 | Role | Username / ID | Password | Phone (for OTP) | Specialization / Context |
 | :--- | :--- | :--- | :--- | :--- |
-| **Patient** | `PAT-001` | `patient123` | `9876543210` | Aarav Sharma (Age 32 · Blood B+) |
-| **Doctor A** | `DR-A` | `docA123` | `9811122233` | Dr. Rajesh Verma (Internal Medicine) |
-| **Doctor B** | `DR-B` | `docB123` | `9822233344` | Dr. Meena Kapoor (Neurology) |
+| **🧑 Patient** | `PAT-001` | `patient123` | `+91 98765 43210` | Aarav Sharma (Age 32 · Blood B+) |
+| **👨‍⚕️ Doctor A** | `DR-A` | `docA123` | `+91 98111 22233` | Dr. Rajesh Verma (Internal Medicine) |
+| **👩‍⚕️ Doctor B** | `DR-B` | `docB123` | `+91 98222 33344` | Dr. Meena Kapoor (Cardiology) |
 
-> 💡 **Tip:** You can also use the **1-Click Demo Access** buttons on the login screen to sign in instantly without typing credentials.
+> 💡 **Tip:** Click the **1-Click Demo Access** pill buttons on the login screen (`🧑 Aarav`, `🩺 Dr. Verma`, `🩺 Dr. Kapoor`) to bypass credential typing and jump straight into the application.
 
 ---
 
 ## 🚀 Getting Started & Local Development
 
-### Prerequisites
-MED-TRACE has no heavy build tool requirements. Any standard web server or Python environment is sufficient.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/MaitrixXD/MED-TRACE.git
+cd MED-TRACE
+```
 
-### 1. Run via Python (Recommended)
-From the project root directory:
+### 2. Run Locally via Python
 ```bash
 python3 -m http.server 8085
 ```
-Open your browser and navigate to:
-```
-http://localhost:8085/
-```
+Open your browser at `http://localhost:8085/`.
 
-### 2. Run via Node.js
+### 3. Run Locally via Node.js
 ```bash
 npx -y serve -p 8085 .
 ```
 
-### 3. Progressive Web App (PWA) Installation
-When running over `http://localhost` or `https://`:
-1. Click the **Install App** button or the browser install prompt in the address bar.
-2. MED-TRACE will run as a standalone desktop/mobile application with offline capabilities powered by `sw.js`.
+### 4. Deploying Backend to Render
+1. Connect your GitHub repository `MaitrixXD/MED-TRACE` to Render.
+2. Create a new **Web Service**.
+3. Set **Build Command**: `npm install` (or none if serving static Node).
+4. Set **Start Command**: `node server.js`.
+5. Add Environment Variables: `PORT=5000`, `FRONTEND_URL=https://med-trace-beta.vercel.app`.
 
 ---
 
-## 🛡️ Security & Compliance Highlights
-- **Role-Based Access Control (RBAC)**: Strict segregation between Patient and Doctor interfaces. Sensitive actions (prescribing drugs, clinical notes, adding timeline events) are restricted to authenticated physicians.
-- **Local Data Sovereignity**: All patient health metrics and medical scans are stored securely in client-side storage without transmitting private data to unauthorized third-party trackers.
-- **Audit-Ready Logging**: Treatment modifications and dosage adjustments are recorded with timestamps and attending physician attribution.
+## 🛡️ Security, Privacy & Compliance Highlights
+
+- **Role-Based Access Control (RBAC)**: Strict segregation between Patient and Clinician privileges. Medical prescriptions, handover notes, and clinical outcomes can only be modified by authenticated doctors.
+- **Client Data Sovereignty**: All sensitive records, scans, and adherence logs remain encrypted and sandboxed within user-controlled storage without unconsented third-party tracker exposure.
+- **Audit-Ready Longitudinal Chain**: Every treatment modification is time-stamped and attributed to the issuing physician, ensuring clinical continuity and medico-legal traceability.
