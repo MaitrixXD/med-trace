@@ -14,19 +14,24 @@ const SUPABASE_URL = "https://zyrrueipvunyvavjwugy.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_cWH0RODSTl-xKSs1YF4SAg_byUIMGAc";
 
 // Initialize Supabase Client
-const supabase = (typeof window.supabase !== "undefined" && window.supabase.createClient)
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
-
-let supabaseClient = supabase;
+// NOTE: The CDN (@supabase/supabase-js@2) exports `window.supabase` as a namespace.
+// We MUST NOT redeclare `const supabase` — it would cause:
+//   SyntaxError: Identifier 'supabase' has already been declared
+// which kills the ENTIRE script (no tab switching, no login, nothing works).
+let supabaseClient = null;
 
 function initSupabase() {
-  if (!supabaseClient && typeof window.supabase !== "undefined" && window.supabase.createClient) {
+  if (!supabaseClient) {
     try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      console.log("⚡ Supabase Auth client initialized successfully:", SUPABASE_URL);
+      if (typeof window.supabase !== "undefined" && window.supabase.createClient) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log("⚡ Supabase Auth client initialized successfully:", SUPABASE_URL);
+      } else {
+        console.warn("⚠️ Supabase SDK not loaded from CDN — auth features disabled, demo mode active.");
+      }
     } catch (e) {
-      console.warn("Supabase init error:", e);
+      console.warn("Supabase init error:", e, "— falling back to demo mode.");
+      supabaseClient = null;
     }
   }
 }
@@ -34,7 +39,7 @@ initSupabase();
 
 // Supabase Email & Password Sign In Handler
 async function handleSupabaseLogin(email, password, role = "patient") {
-  const client = supabase || supabaseClient;
+  const client = supabaseClient;
   if (!client) {
     console.warn("Supabase SDK not loaded");
     return { success: false, error: "Supabase not loaded" };
@@ -70,7 +75,7 @@ async function handleSupabaseLogin(email, password, role = "patient") {
 
 // Supabase Phone OTP Authentication
 async function sendPhoneOTP(phoneNumber) {
-  const client = supabase || supabaseClient;
+  const client = supabaseClient;
   if (!client) return { error: "Supabase client unavailable" };
 
   const { data, error } = await client.auth.signInWithOtp({
@@ -85,7 +90,7 @@ async function sendPhoneOTP(phoneNumber) {
 }
 
 async function verifyPhoneOTP(phoneNumber, token) {
-  const client = supabase || supabaseClient;
+  const client = supabaseClient;
   if (!client) return { error: "Supabase client unavailable" };
 
   const { data: { session: otpSession }, error } = await client.auth.verifyOtp({
@@ -108,7 +113,7 @@ async function verifyPhoneOTP(phoneNumber, token) {
 
 // Supabase Sign Out
 async function logoutUser() {
-  const client = supabase || supabaseClient;
+  const client = supabaseClient;
   if (client) {
     await client.auth.signOut().catch(e => console.warn("Supabase signout:", e));
   }
