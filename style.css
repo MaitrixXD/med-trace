@@ -5082,4 +5082,453 @@ p {
   50% { opacity: 0.45; transform: scale(0.8); }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   MULTI-DEVICE RESPONSIVE LAYER
+   Phone · Tablet · Desktop · Large screens
+   (Loaded last so these rules win at equal specificity)
+═══════════════════════════════════════════════════════════ */
+
+/* Global guards — no sideways scroll, no mobile text inflation */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  /* `clip` (not `hidden`) prevents sideways scroll WITHOUT breaking the sticky top bar */
+  overflow-x: clip;
+}
+
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+/* Long unbroken content (IDs, emails, clinical strings) must wrap */
+.user-name,
+.stat-value,
+.history-card-value,
+.reminder-med-name,
+.doc-meta-val,
+.handover-field-value {
+  overflow-wrap: anywhere;
+}
+
+/* ─── Notch / Dynamic Island safety (works with viewport-fit=cover) ─── */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.topbar {
+  height: calc(var(--topbar-h) + var(--safe-top));
+  padding-top: var(--safe-top);
+}
+
+.app-layout {
+  min-height: calc(100vh - var(--topbar-h) - var(--safe-top));
+}
+
+.sidebar {
+  top: calc(var(--topbar-h) + var(--safe-top));
+  height: calc(100vh - var(--topbar-h) - var(--safe-top));
+}
+
+/* ─── Mobile navigation backdrop (activates with the off-canvas sidebar) ─── */
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ─── Large desktops (≥1440px) ─── */
+@media (min-width: 1440px) {
+  .main-content {
+    padding: 40px 56px;
+  }
+}
+
+/* ─── Small laptops / landscape tablets (≤1200px) ─── */
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 32px 28px;
+  }
+
+  .hero-banner {
+    padding: 44px 40px;
+  }
+
+  .hero-img {
+    width: 280px;
+    height: 200px;
+  }
+}
+
+/* ─── Tablets (≤1024px) ─── */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panel-grid,
+  .report-content,
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+
+  .history-grid,
+  .medicine-store-grid,
+  .pharmacy-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: auto;
+    padding: 40px 32px;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 220px;
+  }
+
+  .doctor-profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+}
+
+/* ─── Tablets & phones (≤900px): off-canvas sidebar + compact top bar ─── */
+@media (max-width: 900px) {
+  /* Sidebar slides in from the left; reuse the existing .collapsed toggle */
+  .sidebar {
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--safe-top));
+    left: 0;
+    z-index: 70;
+    width: var(--sidebar-w);
+    height: calc(100vh - var(--topbar-h) - var(--safe-top));
+    overflow-y: auto;
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(10, 30, 70, .18);
+    transition: transform .26s cubic-bezier(.4, 0, .2, 1), box-shadow .26s ease;
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-w);
+    overflow-y: auto;
+    transform: translateX(-102%);
+    box-shadow: none;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--safe-top));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 65;
+    background: rgba(10, 30, 70, .45);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .26s ease;
+  }
+
+  .sidebar-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-content {
+    padding: 24px 20px;
+  }
+
+  /* Top bar: shed labels so the row never overflows */
+  .topbar {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .topbar-right {
+    gap: 10px;
+  }
+
+  .brand-full .brand-text {
+    display: none;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .user-badge {
+    padding: 5px 10px 5px 5px;
+  }
+
+  .btn-pdf span:last-child,
+  .btn-logout span:last-child,
+  .api-status-badge .api-status-text {
+    display: none;
+  }
+
+  .btn-pdf,
+  .btn-logout {
+    padding: 9px 12px;
+  }
+
+  .api-status-badge {
+    padding: 6px 9px;
+  }
+
+  /* Section headers stack above their action buttons */
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .section-header h1 {
+    font-size: clamp(24px, 5.5vw, 34px);
+  }
+
+  .section-actions {
+    width: 100%;
+  }
+}
+
+/* ─── Phones (≤640px) ─── */
+@media (max-width: 640px) {
+  body {
+    font-size: 14.5px;
+  }
+
+  .main-content {
+    padding: 20px 14px 40px;
+  }
+
+  .api-status-badge {
+    display: none;
+  }
+
+  /* Hero */
+  .hero-banner {
+    padding: 28px 20px;
+    border-radius: var(--radius-lg);
+    gap: 22px;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .hero-actions button {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .hero-img {
+    height: 170px;
+  }
+
+  /* Every card grid collapses to a single readable column */
+  .stats-grid,
+  .history-grid,
+  .panel-grid,
+  .report-content,
+  .medicine-store-grid,
+  .pharmacy-list,
+  .records-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medicine-card {
+    grid-template-columns: 1fr;
+    padding: 18px 20px;
+    gap: 8px;
+  }
+
+  .payment-methods {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tab / filter rows scroll horizontally instead of squashing */
+  .reports-tabs,
+  .pharma-tabs,
+  .records-filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .reports-tabs::-webkit-scrollbar,
+  .pharma-tabs::-webkit-scrollbar,
+  .records-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .report-tab,
+  .pharma-tab,
+  .record-filter-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Doctor profile + panels */
+  .doctor-profile-card {
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .doctor-avatar {
+    width: 76px;
+    height: 76px;
+  }
+
+  .panel-header,
+  .panel-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .timeline-wrap {
+    padding-left: 22px;
+  }
+
+  .timeline-card {
+    padding: 18px;
+  }
+
+  /* Modal becomes a bottom sheet so forms stay usable on a phone */
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .modal-card {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 20px 20px 14px 14px;
+  }
+
+  .modal-header {
+    padding: 18px 18px 14px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-header h2 {
+    font-size: 16px;
+  }
+
+  .modal-body {
+    padding: 18px 18px 22px;
+  }
+
+  /* Reminders */
+  .reminder-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .today-slot {
+    gap: 10px;
+  }
+
+  .next-reminder-chip {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+}
+
+/* ─── Small phones (≤400px) ─── */
+@media (max-width: 400px) {
+  .main-content {
+    padding: 18px 12px 36px;
+  }
+
+  .section-header h1 {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    padding: 18px;
+  }
+
+  .hero-img {
+    height: 150px;
+  }
+
+  .login-card {
+    padding: 22px 16px;
+  }
+}
+
+/* ─── Touch devices: comfortable tap targets, no iOS input zoom ─── */
+@media (hover: none) and (pointer: coarse) {
+  .nav-item {
+    padding: 13px 14px;
+  }
+
+  .btn-login,
+  .btn-primary,
+  .btn-secondary,
+  .btn-logout,
+  .btn-pdf,
+  .btn-add,
+  .btn-edit,
+  .report-tab,
+  .pharma-tab,
+  .record-filter-tab,
+  .method-btn,
+  .demo-pill,
+  .lang-btn {
+    min-height: 44px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ─── Short / landscape viewports: allow the login page to scroll ─── */
+@media (max-width: 900px), (max-height: 760px) {
+  .login-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Pin the decorative glow orbs so they cannot create phantom scroll space */
+  .login-page::before,
+  .login-page::after {
+    position: fixed;
+  }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .modal-card {
+    max-height: 94vh;
+  }
+
+  .hero-img {
+    display: none;
+  }
+}
+
 

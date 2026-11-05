@@ -254,9 +254,69 @@ const SEED = {
       password: "docA123",
       phone: "+91 98111 22233",
       name: "Dr. Rajesh Verma",
-      spec: "Internal Medicine — MBBS, MD",
-      hospital: "Apollo Hospital, New Delhi",
+      title: "Dr. Rajesh Verma",
+      spec: "Internal Medicine • MBBS, MD",
+      primarySpec: "Internal Medicine",
+      degrees: "MBBS, MD",
+      hospital: "Apollo Hospitals, New Delhi",
+      hospitalAffiliations: [
+        "Apollo Hospitals, New Delhi",
+        "Fortis Escorts Hospital, Delhi"
+      ],
       experience: "14 years",
+      experienceYears: 14,
+      regNo: "MMC-74832",
+      languages: ["English", "Hindi"],
+      rating: 4.8,
+      reviewCount: "1.2k",
+      reviewCountNum: 1240,
+      ratingBreakdown: { 5: 82, 4: 12, 3: 4, 2: 1, 1: 1 },
+      availability: {
+        days: "Mon – Sat",
+        slots: ["9:00 AM – 1:00 PM", "4:00 PM – 8:00 PM"]
+      },
+      fees: {
+        firstVisit: 800,
+        followup: 600
+      },
+      expertise: [
+        "Diabetes",
+        "Hypertension",
+        "Cardiac Care",
+        "Respiratory Disorders",
+        "General Medicine"
+      ],
+      educationSummary: "MBBS (Mumbai University, 2008), MD (Internal Medicine, 2011)",
+      about: "Dr. Rajesh Verma is a highly experienced Internal Medicine specialist with over 14 years of clinical practice. He is known for his patient-centric approach and evidence-based treatment methods.",
+      aboutExtended: "He specializes in chronic disease management, cardiovascular risk reduction, and proactive lifestyle interventions. He has presented clinical papers at AIIMS and RSSDI and is an active advocate for clinical handover protocols.",
+      education: [
+        { degree: "MBBS", institution: "Mumbai University", year: "2008" },
+        { degree: "MD — Internal Medicine", institution: "Mumbai University", year: "2011" },
+        { degree: "Fellowship in Diabetes Care", institution: "RSSDI Accredited", year: "2013" }
+      ],
+      workExperience: [
+        { role: "Senior Consultant", hospital: "Apollo Hospitals, New Delhi", period: "2014 – Present" },
+        { role: "Consultant", hospital: "Fortis Escorts Hospital", period: "2011 – 2014" },
+        { role: "Resident Medical Officer", hospital: "KEM Hospital, Mumbai", period: "2008 – 2011" }
+      ],
+      research: [
+        { title: "Glycemic Variability and Cardiovascular Outcomes in Type 2 Diabetes", journal: "Journal of Clinical Endocrinology", year: "2019" },
+        { title: "Comparative Efficacy of ARBs vs ACE Inhibitors in Stage 1 Hypertension", journal: "Indian Heart Journal", year: "2021" }
+      ],
+      awards: [
+        { title: "Best Internal Medicine Specialist", issuer: "AIIMS", year: "2018" },
+        { title: "Excellence in Patient Care Award", issuer: "Apollo Healthcare Summit", year: "2020" }
+      ],
+      memberships: ["IMA", "RSSDI", "API"],
+      stats: {
+        patientsTreated: "2,500+",
+        positiveOutcomes: "95%"
+      },
+      reviews: [
+        { id: "REV-001", patient_id: "PAT-001", appointment_id: "APT-2024-001", author: "Aarav S.", verified: true, date: "June 2024", rating: 5, comment: "Dr. Verma took the time to explain the rationale for switching from Losartan to Telmisartan. My BP is now completely under control." },
+        { id: "REV-002", patient_id: "PAT-002", appointment_id: "APT-2024-002", author: "Sunita M.", verified: true, date: "March 2024", rating: 5, comment: "Very attentive physician. Does not rush through consultations and provides clear lifestyle advice alongside medication." },
+        { id: "REV-003", patient_id: "PAT-003", appointment_id: "APT-2024-003", author: "Ramesh K.", verified: true, date: "January 2024", rating: 4, comment: "Excellent diagnostic acumen and warm bedside manner. Highly recommended for chronic hypertension management." }
+      ],
       netOutcome: "Mixed",
       meds: [
         {
@@ -292,9 +352,71 @@ const SEED = {
       password: "docB123",
       phone: "+91 98222 33344",
       name: "Dr. Meena Kapoor",
-      spec: "Cardiology — MBBS, MD, DM (Cardiology)",
+      title: "Dr. Meena Kapoor",
+      spec: "Cardiology • MBBS, MD, DM (Cardiology)",
+      primarySpec: "Cardiology",
+      degrees: "MBBS, MD, DM (Cardiology)",
       hospital: "AIIMS, New Delhi",
+      hospitalAffiliations: [
+        "AIIMS, New Delhi",
+        "Max Super Speciality Hospital, Saket"
+      ],
       experience: "19 years",
+      experienceYears: 19,
+      regNo: "DMC-58219",
+      languages: ["English", "Hindi", "Punjabi"],
+      rating: 4.9,
+      reviewCount: "1.8k",
+      reviewCountNum: 1820,
+      ratingBreakdown: { 5: 88, 4: 9, 3: 2, 2: 1, 1: 0 },
+      availability: {
+        days: "Tue, Thu, Sat",
+        slots: ["10:00 AM – 2:00 PM", "5:00 PM – 8:30 PM"]
+      },
+      fees: {
+        firstVisit: 1200,
+        followup: 800
+      },
+      expertise: [
+        "Interventional Cardiology",
+        "Arrhythmia Management",
+        "Refractory Hypertension",
+        "Heart Failure",
+        "Preventive Cardiology"
+      ],
+      educationSummary: "MBBS (AIIMS New Delhi, 2005), MD (AIIMS, 2008), DM (Cardiology, 2012)",
+      about: "Dr. Meena Kapoor is a nationally recognized Interventional Cardiologist with over 19 years of clinical and academic practice. She specializes in complex coronary interventions, personalized hypertension management, and non-invasive cardiovascular therapeutics.",
+      aboutExtended: "A former Professor of Cardiology at AIIMS, Dr. Kapoor leads multicenter cardiovascular outcomes research and specializes in tailoring pharmacotherapy to minimize adverse interactions.",
+      education: [
+        { degree: "MBBS", institution: "AIIMS New Delhi", year: "2005" },
+        { degree: "MD — General Medicine", institution: "AIIMS New Delhi", year: "2008" },
+        { degree: "DM — Cardiology", institution: "AIIMS New Delhi", year: "2012" },
+        { degree: "Fellow of the American College of Cardiology (FACC)", institution: "ACC USA", year: "2016" }
+      ],
+      workExperience: [
+        { role: "Senior Consultant & Professor", hospital: "AIIMS, New Delhi", period: "2015 – Present" },
+        { role: "Visiting Interventional Cardiologist", hospital: "Max Super Speciality Hospital, Saket", period: "2012 – 2015" },
+        { role: "Senior Cardiology Registrar", hospital: "AIIMS, New Delhi", period: "2009 – 2012" }
+      ],
+      research: [
+        { title: "Long-term Efficacy of Low-dose Calcium Channel Blockers in Essential Hypertension", journal: "The Lancet Regional Health", year: "2020" },
+        { title: "Risk Stratification in Early-Onset Coronary Artery Disease in South Asian Cohorts", journal: "Journal of the American College of Cardiology", year: "2022" }
+      ],
+      awards: [
+        { title: "National Healthcare Leadership Award in Cardiology", issuer: "Ministry of Health", year: "2019" },
+        { title: "Young Investigator Award", issuer: "Cardiological Society of India", year: "2014" },
+        { title: "AIIMS Gold Medal in Clinical Medicine", issuer: "AIIMS", year: "2008" }
+      ],
+      memberships: ["CSI", "ACC", "IMA"],
+      stats: {
+        patientsTreated: "4,200+",
+        positiveOutcomes: "97%"
+      },
+      reviews: [
+        { id: "REV-004", patient_id: "PAT-001", appointment_id: "APT-2024-004", author: "Aarav S.", verified: true, date: "August 2024", rating: 5, comment: "Dr. Meena Kapoor diagnosed my calcium-channel tolerance accurately. Switching to Amlodipine stabilized my night readings immediately." },
+        { id: "REV-005", patient_id: "PAT-004", appointment_id: "APT-2024-005", author: "Priya R.", verified: true, date: "May 2024", rating: 5, comment: "One of the most knowledgeable and compassionate cardiologists. She explains ECG and echocardiogram reports in plain language." },
+        { id: "REV-006", patient_id: "PAT-005", appointment_id: "APT-2024-006", author: "Vikram N.", verified: true, date: "February 2024", rating: 5, comment: "Top tier care. Her preventive strategy helped normalize my cholesterol and blood pressure without over-medication." }
+      ],
       netOutcome: "Improved",
       meds: [
         {
@@ -577,6 +699,26 @@ function loadData() {
       if (data.doctors) {
         if (data.doctors.A && !data.doctors.A.phone) data.doctors.A.phone = "+91 98111 22233";
         if (data.doctors.B && !data.doctors.B.phone) data.doctors.B.phone = "+91 98222 33344";
+        ['A', 'B'].forEach(key => {
+          if (data.doctors[key] && SEED.doctors[key]) {
+            Object.keys(SEED.doctors[key]).forEach(prop => {
+              if (data.doctors[key][prop] === undefined) {
+                data.doctors[key][prop] = JSON.parse(JSON.stringify(SEED.doctors[key][prop]));
+              }
+            });
+            // Ensure reviews are populated and normalized
+            if (!Array.isArray(data.doctors[key].reviews) || data.doctors[key].reviews.length === 0) {
+              data.doctors[key].reviews = JSON.parse(JSON.stringify(SEED.doctors[key].reviews));
+            } else {
+              data.doctors[key].reviews.forEach((r, idx) => {
+                if (!r.id) r.id = (SEED.doctors[key].reviews[idx] && SEED.doctors[key].reviews[idx].id) || `REV-${key}-${Date.now()}-${idx}`;
+                if (!r.patient_id) r.patient_id = (SEED.doctors[key].reviews[idx] && SEED.doctors[key].reviews[idx].patient_id) || (r.author === "Aarav S." ? "PAT-001" : `PAT-00${idx + 2}`);
+                if (!r.appointment_id) r.appointment_id = (SEED.doctors[key].reviews[idx] && SEED.doctors[key].reviews[idx].appointment_id) || `APT-${key}-00${idx + 1}`;
+                if (!r.comment && r.review_text) r.comment = r.review_text;
+              });
+            }
+          }
+        });
       }
       return data;
     }
@@ -1407,10 +1549,44 @@ function showSection(id, btn) {
   if (id === "pharmacy") renderPharmacy();
   if (id === "orders") renderOrders();
   if (id === "reminders" && typeof renderReminders === "function") renderReminders();
+
+  // On tablets/phones the sidebar is an overlay — close it after navigating
+  closeMobileSidebar();
+}
+
+/* ─────────────────────────────────────────────
+   MULTI-DEVICE SIDEBAR
+   Desktop: collapses the sidebar width.
+   Tablet/phone (≤900px): slides the sidebar off-canvas with a backdrop.
+───────────────────────────────────────────── */
+function isCompactNav() {
+  return window.matchMedia("(max-width: 900px)").matches;
 }
 
 function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("collapsed");
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  if (!sidebar) return;
+  const isOpening = sidebar.classList.contains("collapsed");
+  sidebar.classList.toggle("collapsed");
+  if (backdrop) backdrop.classList.toggle("show", isCompactNav() && isOpening);
+}
+
+function closeMobileSidebar() {
+  if (!isCompactNav()) return;
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  if (sidebar) sidebar.classList.add("collapsed");
+  if (backdrop) backdrop.classList.remove("show");
+}
+
+/* Keep the sidebar in the right state when the viewport crosses the breakpoint */
+function applyNavViewport() {
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  if (!sidebar) return;
+  sidebar.classList.toggle("collapsed", isCompactNav());
+  if (backdrop) backdrop.classList.remove("show");
 }
 
 /* ─────────────────────────────────────────────
@@ -1593,8 +1769,700 @@ function renderRecentActivity() {
 }
 
 /* ─────────────────────────────────────────────
-   DOCTOR SECTIONS
+   DOCTOR SECTIONS & COMPREHENSIVE PROFILE ENGINE
 ───────────────────────────────────────────── */
+var activeDocProfileTab = { A: "about", B: "about" };
+var docAboutExpanded = { A: false, B: false };
+
+function switchDoctorProfileTab(key, tabName) {
+  activeDocProfileTab[key] = tabName;
+  const tabBodyEl = document.getElementById(`docTabBody_${key}`);
+  const navEl = document.getElementById(`docTabsNav_${key}`);
+  if (navEl) {
+    navEl.querySelectorAll('.doc-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName);
+    });
+  }
+  if (tabBodyEl) {
+    tabBodyEl.innerHTML = renderDoctorTabContent(key, tabName);
+  }
+}
+
+function toggleDoctorAbout(key) {
+  docAboutExpanded[key] = !docAboutExpanded[key];
+  const tabBodyEl = document.getElementById(`docTabBody_${key}`);
+  if (tabBodyEl) {
+    tabBodyEl.innerHTML = renderDoctorTabContent(key, 'about');
+  }
+}
+
+function renderDoctorTabContent(key, tabName) {
+  const d = appData.doctors[key];
+  if (!d) return "";
+
+  if (tabName === "about") {
+    const isExpanded = docAboutExpanded[key];
+    const textToShow = isExpanded ? `${d.about} ${d.aboutExtended || ""}` : d.about;
+    const btnText = isExpanded ? "Read less ←" : "Read more →";
+    return `
+      <div class="doc-about-wrap">
+        <div class="doc-about-text">
+          <p style="margin:0 0 10px;line-height:1.7;">${esc(textToShow)}</p>
+          <button class="doc-readmore-btn" onclick="toggleDoctorAbout('${key}')">${btnText}</button>
+        </div>
+        <div class="doc-pulse-icon-box" title="Clinical Continuity Engine Active">
+          <svg class="doc-pulse-svg" viewBox="0 0 24 24">
+            <path d="M3 12h3l3-8 4 16 3-8h5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabName === "experience") {
+    const list = d.workExperience || [];
+    return `
+      <div class="doc-timeline-list" style="display:flex;flex-direction:column;gap:10px;">
+        ${list.map(item => `
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);">
+            <div style="font-size:18px;">💼</div>
+            <div>
+              <div style="font-size:13.5px;font-weight:700;color:var(--ink);">${esc(item.role)}</div>
+              <div style="font-size:12.5px;color:var(--blue-600);font-weight:600;margin-top:2px;">🏥 ${esc(item.hospital)}</div>
+              <div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">📅 ${esc(item.period)}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  if (tabName === "research") {
+    const papers = d.research || [];
+    const awards = d.awards || [];
+    return `
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <div style="font-size:11.5px;font-weight:800;color:var(--blue-700);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">📚 Research Papers & Publications</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            ${papers.map(p => `
+              <div style="padding:10px 14px;background:#f8fafc;border-radius:8px;border-left:3px solid var(--blue-400);">
+                <div style="font-size:13px;font-weight:700;color:var(--ink);">${esc(p.title)}</div>
+                <div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">📖 <em>${esc(p.journal)}</em> · ${esc(p.year)}</div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px;font-weight:800;color:var(--blue-700);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">🎖️ Prestigious Awards & Honors</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            ${awards.map(a => `
+              <div style="padding:10px 14px;background:#f8fafc;border-radius:8px;border-left:3px solid #f59e0b;display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:var(--ink);">${esc(a.title)}</div>
+                  <div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">🏛️ ${esc(a.issuer)}</div>
+                </div>
+                <span style="font-size:11px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px;">${esc(a.year)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (tabName === "reviews") {
+    const reviews = d.reviews || [];
+    const patientEligibility = getPatientDoctorEligibility(key);
+    const isPatientUser = !isDoctor();
+    const currentPatientId = session.patientId || "PAT-001";
+    const currentPatientName = session.patientName || (appData.patient && appData.patient.name) || "Aarav Sharma";
+
+    let bannerHtml = "";
+    if (isPatientUser) {
+      if (patientEligibility.eligible) {
+        if (patientEligibility.unreviewed.length > 0) {
+          bannerHtml = `
+            <div class="doc-review-banner">
+              <div class="doc-review-banner-text">
+                <h4><span>⭐</span> Rate & Review Dr. ${translateClinical(d.name.split(' ').slice(0, 2).join(' '))}</h4>
+                <p>You have verified treatment records with this doctor. Share your consultation experience to help other patients.</p>
+              </div>
+              <button class="btn-open-rate-modal" onclick="openSubmitReviewModal('${key}')">
+                <span>✍️</span> Rate Doctor
+              </button>
+            </div>
+          `;
+        } else {
+          bannerHtml = `
+            <div class="doc-review-banner" style="background:#f0fdf4;border-color:#bbf7d0;">
+              <div class="doc-review-banner-text">
+                <h4 style="color:#166534;"><span>✓</span> Verified Review Recorded</h4>
+                <p style="color:#15803d;">You have submitted a review for your verified appointment. You can view, edit, or delete your review below.</p>
+              </div>
+            </div>
+          `;
+        }
+      } else {
+        bannerHtml = `
+          <div class="doc-review-banner" style="background:#fffbeb;border-color:#fef3c7;">
+            <div class="doc-review-banner-text">
+              <h4 style="color:#92400e;"><span>🔒</span> Verified Patient Protection Active</h4>
+              <p style="color:#b45309;">Reviews are restricted to patients with completed clinical appointments or verified treatment records.</p>
+            </div>
+          </div>
+        `;
+      }
+    } else {
+      bannerHtml = `
+        <div class="doc-review-banner" style="background:#f8fafc;border-color:#e2e8f0;">
+          <div class="doc-review-banner-text">
+            <h4 style="color:var(--ink);"><span>👨‍⚕️</span> Clinical Review Management</h4>
+            <p>Verified reviews submitted by authenticated patients with documented consultation records.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    const reviewsListHtml = reviews.length === 0
+      ? `<div style="text-align:center;padding:30px;color:var(--ink-muted);font-size:13px;">No patient reviews submitted yet.</div>`
+      : reviews.map(r => {
+          const isOwn = (r.patient_id === currentPatientId) || (r.author === "Aarav S.") || (r.author === currentPatientName);
+          const authorInitial = esc(r.author ? r.author.trim()[0] : "P");
+          const ratingStars = '★'.repeat(r.rating || 5) + '☆'.repeat(Math.max(0, 5 - (r.rating || 5)));
+          const commentText = esc(r.comment || r.review_text || "");
+
+          return `
+            <div class="doc-review-item-card ${isOwn ? 'is-own-review' : ''}" id="rev-${r.id || ''}">
+              <div class="doc-review-author-row">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="width:32px;height:32px;border-radius:50%;background:${isOwn ? 'var(--blue-600)' : 'var(--blue-100)'};color:${isOwn ? '#fff' : 'var(--blue-700)'};font-weight:800;font-size:13px;display:inline-flex;align-items:center;justify-content:center;">${authorInitial}</span>
+                  <div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:13.5px;font-weight:700;color:var(--ink);">${esc(r.author || 'Verified Patient')}</span>
+                      ${r.verified ? '<span class="doc-verified-patient-badge">✓ Verified Patient</span>' : ''}
+                      ${isOwn ? '<span class="doc-your-review-badge">Your Review</span>' : ''}
+                    </div>
+                    <div style="font-size:11px;color:var(--ink-muted);margin-top:1px;">${esc(r.date || 'Recent')}</div>
+                  </div>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="color:#f59e0b;font-size:14px;letter-spacing:1px;">${ratingStars}</span>
+                  ${(isOwn && isPatientUser) ? `
+                    <div class="doc-review-actions">
+                      <button class="btn-review-action edit" onclick="openEditDoctorReviewModal('${key}', '${r.id}')" title="Edit Review">
+                        <span>✏</span> Edit
+                      </button>
+                      <button class="btn-review-action delete" onclick="confirmDeleteDoctorReview('${key}', '${r.id}')" title="Delete Review">
+                        <span>🗑</span> Delete
+                      </button>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+
+              <div style="font-size:13px;color:var(--ink-mid);line-height:1.6;margin-top:4px;">
+                "${commentText}"
+              </div>
+
+              ${r.appointment_id ? `
+                <div class="doc-review-meta-bar">
+                  <span class="doc-review-appt-tag">📅 Verified Clinical Record: ${esc(r.appointment_id)}</span>
+                  ${r.updated_at && r.updated_at !== r.created_at ? `<span style="font-size:11px;color:var(--ink-muted);">(edited)</span>` : ''}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join("");
+
+    return `
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        ${bannerHtml}
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          ${reviewsListHtml}
+        </div>
+      </div>
+    `;
+  }
+  return "";
+}
+
+// Eligibility Helper for Patient Reviews
+function getPatientDoctorEligibility(key) {
+  const d = appData.doctors[key];
+  if (!d) return { eligible: false, appointments: [], unreviewed: [] };
+
+  const currentPatientId = session.patientId || "PAT-001";
+  const currentPatientName = session.patientName || (appData.patient && appData.patient.name) || "Aarav Sharma";
+  const doctorVisits = (appData.timeline || []).filter(ti => ti.doctor === key);
+  const doctorMeds = (d.meds || []);
+
+  const existingReviews = (d.reviews || []).filter(r => 
+    r.patient_id === currentPatientId || r.author === "Aarav S." || r.author === currentPatientName
+  );
+  const reviewedApptIds = new Set(existingReviews.map(r => r.appointment_id));
+
+  const allEligibleAppts = [];
+
+  // Add timeline visits
+  doctorVisits.forEach((v, idx) => {
+    const apptId = `APT-${key}-V${idx + 1}`;
+    allEligibleAppts.push({
+      id: apptId,
+      date: v.date,
+      title: `Visit: ${v.date} — ${translateClinical(v.title)}`,
+      alreadyReviewed: reviewedApptIds.has(apptId)
+    });
+  });
+
+  // Add treatment medication record if timeline entries are empty
+  if (doctorMeds.length > 0) {
+    const medApptId = `APT-${key}-MED`;
+    allEligibleAppts.push({
+      id: medApptId,
+      date: doctorMeds[0].startDate || "2024",
+      title: `Completed Treatment — ${doctorMeds[0].name} (${doctorMeds[0].reason || 'Clinical Consultation'})`,
+      alreadyReviewed: reviewedApptIds.has(medApptId) || reviewedApptIds.has("APT-2024-001") || reviewedApptIds.has("APT-2024-004")
+    });
+  }
+
+  const unreviewed = allEligibleAppts.filter(a => !a.alreadyReviewed);
+  const eligible = allEligibleAppts.length > 0;
+
+  return { eligible, appointments: allEligibleAppts, unreviewed };
+}
+
+function renderDoctorReviewsCard(key) {
+  const d = appData.doctors[key];
+  const rating = d.rating || 4.8;
+  const reviewCount = d.reviewCountNum ? d.reviewCountNum.toLocaleString() + "+" : (d.reviewCount || "1,200+");
+  const b = d.ratingBreakdown || { 5: 82, 4: 12, 3: 4, 2: 1, 1: 1 };
+  const isPatientUser = !isDoctor();
+
+  return `
+    <div class="doc-reviews-card">
+      <div class="doc-reviews-header">
+        <span style="display:flex;align-items:center;gap:6px;">⭐ Patient Reviews & Ratings</span>
+        <button class="doc-reviews-viewall" onclick="switchDoctorProfileTab('${key}', 'reviews')">View all →</button>
+      </div>
+      <div class="doc-reviews-score-box">
+        <div class="doc-reviews-score-big">${rating}</div>
+        <div>
+          <div class="doc-reviews-stars">★★★★★</div>
+          <div class="doc-reviews-count">(${reviewCount} reviews)</div>
+        </div>
+      </div>
+      <div class="doc-rating-bars">
+        ${[5, 4, 3, 2, 1].map(star => {
+          const pct = b[star] !== undefined ? b[star] : 0;
+          return `
+            <div class="doc-bar-row">
+              <span style="width:14px;font-weight:700;">${star}★</span>
+              <div class="doc-bar-track">
+                <div class="doc-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+              <span class="doc-bar-pct">${pct}%</span>
+            </div>
+          `;
+        }).join("")}
+      </div>
+
+      <div style="margin-top:6px;border-top:1px dashed var(--line);padding-top:12px;">
+        ${isPatientUser ? `
+          <button class="btn-open-rate-modal" style="width:100%;justify-content:center;padding:9px;" onclick="openSubmitReviewModal('${key}')">
+            <span>✍️</span> Rate & Review Doctor
+          </button>
+        ` : `
+          <button class="btn-review-action" style="width:100%;justify-content:center;padding:8px;" onclick="switchDoctorProfileTab('${key}', 'reviews')">
+            <span>👁️</span> View Patient Feedback
+          </button>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+// Dynamic Recalculation of Doctor Rating & Star Breakdown
+function recalculateDoctorRatings(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const revs = d.reviews || [];
+  if (revs.length === 0) {
+    d.rating = 0;
+    d.reviewCountNum = 0;
+    d.reviewCount = "0";
+    d.ratingBreakdown = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  } else {
+    const total = revs.length;
+    const sum = revs.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+    d.rating = Math.round((sum / total) * 10) / 10;
+    d.reviewCountNum = total;
+    d.reviewCount = total >= 1000 ? (total / 1000).toFixed(1) + "k" : total.toString();
+
+    const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    revs.forEach(r => {
+      const star = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5)));
+      counts[star] = (counts[star] || 0) + 1;
+    });
+
+    d.ratingBreakdown = {
+      5: Math.round((counts[5] / total) * 100),
+      4: Math.round((counts[4] / total) * 100),
+      3: Math.round((counts[3] / total) * 100),
+      2: Math.round((counts[2] / total) * 100),
+      1: Math.round((counts[1] / total) * 100),
+    };
+  }
+
+  saveData();
+  refreshDoctorReviewsUI(key);
+}
+
+// Re-render UI elements connected to Reviews
+function refreshDoctorReviewsUI(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  // 1. Update Header Rating Pill
+  const actionsEl = document.getElementById(`doctor${key}Actions`);
+  if (actionsEl) {
+    const ratingEl = actionsEl.querySelector(".doc-header-rating");
+    if (ratingEl) {
+      ratingEl.innerHTML = `<span class="star">★</span> <strong>${d.rating}</strong> <span class="count">(${d.reviewCount} reviews)</span>`;
+    }
+  }
+
+  // 2. Update Reviews Score Card
+  const cardContainer = document.getElementById(`docReviewsCard_${key}`);
+  if (cardContainer) {
+    cardContainer.innerHTML = renderDoctorReviewsCard(key);
+  }
+
+  // 3. Update Reviews Tab Body if currently active
+  if (activeDocProfileTab[key] === "reviews") {
+    const tabBodyEl = document.getElementById(`docTabBody_${key}`);
+    if (tabBodyEl) {
+      tabBodyEl.innerHTML = renderDoctorTabContent(key, "reviews");
+    }
+  }
+}
+
+// Global variable for active interactive star selection
+var currentModalRating = 5;
+
+function setInteractiveReviewRating(rating) {
+  currentModalRating = rating;
+  const starsContainer = document.getElementById("starRatingPicker");
+  if (starsContainer) {
+    starsContainer.querySelectorAll(".star-rating-item").forEach(starEl => {
+      const val = Number(starEl.getAttribute("data-val"));
+      starEl.classList.toggle("active", val <= rating);
+    });
+  }
+  const labelEl = document.getElementById("starRatingLabel");
+  if (labelEl) {
+    const labels = {
+      1: "★☆☆☆☆ 1/5 — Poor",
+      2: "★★☆☆☆ 2/5 — Fair",
+      3: "★★★☆☆ 3/5 — Good",
+      4: "★★★★☆ 4/5 — Very Good",
+      5: "★★★★★ 5/5 — Excellent"
+    };
+    labelEl.textContent = labels[rating] || `${rating}/5`;
+  }
+}
+
+// ── Modal: Submit New Review ───────────────────────────────────────────
+function openSubmitReviewModal(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const eligibility = getPatientDoctorEligibility(key);
+  if (!eligibility.eligible) {
+    showToast("⚠️ Only verified patients with completed appointments can submit reviews.", "warning");
+    return;
+  }
+  if (eligibility.unreviewed.length === 0) {
+    showToast("ℹ️ You have already reviewed all your completed appointments with this doctor.", "info");
+    return;
+  }
+
+  currentModalRating = 5;
+
+  const apptOptions = eligibility.unreviewed.map(a => `
+    <option value="${a.id}">${esc(a.title)}</option>
+  `).join("");
+
+  openModal(`✍️ Rate & Review — ${d.name}`, `
+    <div style="padding:4px 0;">
+      <div style="background:var(--blue-50);border:1px solid var(--blue-200);border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+        <div style="font-size:12.5px;font-weight:700;color:var(--blue-800);">🩺 Verified Patient Consultation Review</div>
+        <div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">Your feedback helps fellow patients make informed decisions about their healthcare.</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px;">
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">Select Verified Appointment / Record *</label>
+        <select id="rev_appt_id" class="input-select" style="width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:13px;">
+          ${apptOptions}
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:4px;">Overall Rating *</label>
+        <div class="star-rating-widget">
+          <div class="star-rating-stars" id="starRatingPicker">
+            ${[1, 2, 3, 4, 5].map(i => `
+              <span class="star-rating-item ${i <= 5 ? 'active' : ''}" data-val="${i}" onclick="setInteractiveReviewRating(${i})" onmouseover="this.parentElement.querySelectorAll('.star-rating-item').forEach(s => s.classList.toggle('hovered', Number(s.getAttribute('data-val')) <= ${i}))" onmouseout="this.parentElement.querySelectorAll('.star-rating-item').forEach(s => s.classList.remove('hovered'))">★</span>
+            `).join("")}
+          </div>
+          <span class="star-rating-label" id="starRatingLabel">★★★★★ 5/5 — Excellent</span>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">Written Feedback / Experience *</label>
+        <textarea id="rev_text" rows="4" placeholder="Describe the consultation, doctor's diagnosis explanation, bedside manner, outcome, and advice (minimum 10 characters)..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;resize:vertical;" oninput="document.getElementById('rev_char_count').textContent = this.value.trim().length + ' chars';"></textarea>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-muted);margin-top:4px;">
+          <span>Minimum 10 characters required</span>
+          <span id="rev_char_count">0 chars</span>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;border-top:1px solid var(--line);padding-top:14px;">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="submitDoctorReview('${key}')">Submit Verified Review</button>
+      </div>
+    </div>
+  `);
+}
+
+// Submit Review Handler with Backend API & Local Fallback
+async function submitDoctorReview(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const apptSelect = document.getElementById("rev_appt_id");
+  const textInput = document.getElementById("rev_text");
+
+  if (!apptSelect || !textInput) return;
+
+  const apptId = apptSelect.value;
+  const reviewText = textInput.value.trim();
+  const rating = currentModalRating;
+
+  if (rating < 1 || rating > 5) {
+    showToast("⚠️ Please select a rating between 1 and 5 stars.", "warning");
+    return;
+  }
+  if (!reviewText || reviewText.length < 10) {
+    showToast("⚠️ Please enter at least 10 characters of feedback.", "warning");
+    return;
+  }
+
+  const patientId = session.patientId || "PAT-001";
+  const authorName = session.patientName || (appData.patient && appData.patient.name) || "Aarav Sharma";
+  const doctorId = `DR-${key}`;
+
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const now = new Date();
+  const dateStr = `${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  const newReview = {
+    id: `REV-${Date.now()}`,
+    review_id: `REV-${Date.now()}`,
+    doctor_id: doctorId,
+    patient_id: patientId,
+    appointment_id: apptId,
+    rating: rating,
+    comment: reviewText,
+    review_text: reviewText,
+    author: authorName,
+    author_name: authorName,
+    verified: true,
+    date: dateStr,
+    created_at: now.toISOString(),
+    updated_at: now.toISOString()
+  };
+
+  // Add to local state
+  if (!Array.isArray(d.reviews)) d.reviews = [];
+  d.reviews.unshift(newReview);
+
+  // Recalculate ratings and refresh UI
+  recalculateDoctorRatings(key);
+
+  // Close modal and notify
+  closeModal();
+  showToast("⭐ Your review has been submitted and verified!", "success");
+
+  // Call Backend API asynchronously
+  try {
+    fetch(`${API_BASE_URL}/reviews`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        doctor_id: doctorId,
+        patient_id: patientId,
+        appointment_id: apptId,
+        rating: rating,
+        review_text: reviewText,
+        author_name: authorName
+      })
+    }).then(res => res.json()).then(resp => {
+      if (resp && resp.success) {
+        console.log("⚡ Review synchronized with backend API:", resp.data);
+      }
+    }).catch(e => console.warn("Backend review sync failed (local state active):", e));
+  } catch (err) {
+    console.warn("Async API call error:", err);
+  }
+}
+
+// ── Modal: Edit Existing Review ───────────────────────────────────────────
+function openEditDoctorReviewModal(key, reviewId) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const review = (d.reviews || []).find(r => (r.id === reviewId || r.review_id === reviewId));
+  if (!review) {
+    showToast("Review not found.", "error");
+    return;
+  }
+
+  currentModalRating = Number(review.rating) || 5;
+  const initialText = review.comment || review.review_text || "";
+
+  openModal(`✏ Edit Review — Dr. ${d.name}`, `
+    <div style="padding:4px 0;">
+      <div class="form-group" style="margin-bottom:16px;">
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:4px;">Edit Rating *</label>
+        <div class="star-rating-widget">
+          <div class="star-rating-stars" id="starRatingPicker">
+            ${[1, 2, 3, 4, 5].map(i => `
+              <span class="star-rating-item ${i <= currentModalRating ? 'active' : ''}" data-val="${i}" onclick="setInteractiveReviewRating(${i})">★</span>
+            `).join("")}
+          </div>
+          <span class="star-rating-label" id="starRatingLabel">${currentModalRating}/5</span>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">Edit Your Feedback *</label>
+        <textarea id="edit_rev_text" rows="4" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;resize:vertical;" oninput="document.getElementById('edit_rev_char_count').textContent = this.value.trim().length + ' chars';">${esc(initialText)}</textarea>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-muted);margin-top:4px;">
+          <span>Minimum 10 characters required</span>
+          <span id="edit_rev_char_count">${initialText.length} chars</span>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;border-top:1px solid var(--line);padding-top:14px;">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveEditDoctorReview('${key}', '${reviewId}')">Save Changes</button>
+      </div>
+    </div>
+  `);
+
+  setInteractiveReviewRating(currentModalRating);
+}
+
+// Save Edited Review
+async function saveEditDoctorReview(key, reviewId) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const review = (d.reviews || []).find(r => (r.id === reviewId || r.review_id === reviewId));
+  if (!review) return;
+
+  const textInput = document.getElementById("edit_rev_text");
+  if (!textInput) return;
+
+  const updatedText = textInput.value.trim();
+  const rating = currentModalRating;
+
+  if (rating < 1 || rating > 5) {
+    showToast("⚠️ Rating must be between 1 and 5.", "warning");
+    return;
+  }
+  if (!updatedText || updatedText.length < 10) {
+    showToast("⚠️ Please enter at least 10 characters.", "warning");
+    return;
+  }
+
+  // Update local review
+  review.rating = rating;
+  review.comment = updatedText;
+  review.review_text = updatedText;
+  review.updated_at = new Date().toISOString();
+
+  recalculateDoctorRatings(key);
+  closeModal();
+  showToast("✏ Your review has been updated successfully!", "success");
+
+  // Call Backend API
+  try {
+    const patientId = session.patientId || "PAT-001";
+    fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        patient_id: patientId,
+        rating: rating,
+        review_text: updatedText
+      })
+    }).catch(e => console.warn("Backend update review:", e));
+  } catch (e) {}
+}
+
+// Confirm & Delete Review
+function confirmDeleteDoctorReview(key, reviewId) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const review = (d.reviews || []).find(r => (r.id === reviewId || r.review_id === reviewId));
+  if (!review) return;
+
+  openModal("🗑 Delete Review", `
+    <div style="padding:4px 0;">
+      <p style="font-size:13.5px;color:var(--ink);line-height:1.6;margin-bottom:14px;">
+        Are you sure you want to delete your review for <strong>${esc(d.name)}</strong>? This action cannot be undone.
+      </p>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px;border-left:3px solid var(--red-400);font-size:12.5px;color:var(--ink-muted);margin-bottom:18px;">
+        "${esc(review.comment || review.review_text || '')}"
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-danger" style="padding:8px 16px;" onclick="executeDeleteDoctorReview('${key}', '${reviewId}')">Confirm Delete</button>
+      </div>
+    </div>
+  `);
+}
+
+async function executeDeleteDoctorReview(key, reviewId) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  const idx = (d.reviews || []).findIndex(r => (r.id === reviewId || r.review_id === reviewId));
+  if (idx !== -1) {
+    d.reviews.splice(idx, 1);
+    recalculateDoctorRatings(key);
+  }
+
+  closeModal();
+  showToast("🗑 Review deleted successfully.", "info");
+
+  // Call Backend API
+  try {
+    const patientId = session.patientId || "PAT-001";
+    fetch(`${API_BASE_URL}/reviews/${reviewId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ patient_id: patientId })
+    }).catch(e => console.warn("Backend delete review:", e));
+  } catch (e) {}
+}
+
 function renderDoctorSection(key) {
   const d = appData.doctors[key];
   const imgSrc = key === "A" ? "doctor_a.jpg" : "doctor_b.jpg";
@@ -1606,42 +2474,259 @@ function renderDoctorSection(key) {
   const docHosp = translateClinical(d.hospital);
   const docExp = translateClinical(d.experience);
 
-  // Title
-  document.getElementById(`doctor${key}Title`).textContent = docName;
-  document.getElementById(`doctor${key}Spec`).textContent = docSpec;
-
-  // Doctor A/B edit info for doctors
-  const actionsEl = document.getElementById(`doctor${key}Actions`);
-  if (actionsEl && canEdit) {
-    actionsEl.innerHTML = `
-      <button class="btn-edit" onclick="openEditDoctorInfo('${key}')">${t("editInfoBtn", "✏ Edit Info")}</button>
-    `;
-  } else if (actionsEl) {
-    actionsEl.innerHTML = "";
+  // Set Section Eyebrow, Title and Subtitle with Verified Checkmark Badge
+  const eyebrowEl = document.querySelector(`#doctor${key} .eyebrow`);
+  if (eyebrowEl) {
+    eyebrowEl.textContent = `DOCTOR ${key} — DOCTOR PROFILE`;
+  }
+  const titleEl = document.getElementById(`doctor${key}Title`);
+  if (titleEl) {
+    titleEl.innerHTML = `${docName} <span class="doc-verified-badge" title="Verified Medical Practitioner" aria-label="Verified"><svg viewBox="0 0 24 24" width="22" height="22" fill="#1d56a0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>`;
+  }
+  const specEl = document.getElementById(`doctor${key}Spec`);
+  if (specEl) {
+    specEl.textContent = `${d.primarySpec || docSpec} • ${d.degrees || "MBBS, MD"}`;
   }
 
-  // Profile card
-  document.getElementById(`doctor${key}Profile`).innerHTML = `
-    <img src="${imgSrc}" alt="${docName}" class="doctor-avatar" onerror="this.style.display='none'">
-    <div class="doctor-info-wrap">
-      <div class="doctor-name">${docName}</div>
-      <div class="doctor-spec">${docSpec}</div>
-      <div class="doctor-meta">
-        <div class="doctor-meta-item">
-          <span class="meta-label">${t("hospitalLabel", "Hospital")}</span>
-          <span class="meta-value">${docHosp}</span>
+  // Header Actions: Rating Pill + Book Appointment + Edit Profile
+  const actionsEl = document.getElementById(`doctor${key}Actions`);
+  if (actionsEl) {
+    actionsEl.innerHTML = `
+      <div class="doc-header-actions">
+        <div class="doc-header-rating">
+          <span class="star">★</span> <strong>${d.rating || 4.8}</strong> <span class="count">(${d.reviewCount || "1.2k"} reviews)</span>
         </div>
-        <div class="doctor-meta-item">
-          <span class="meta-label">${t("expLabel", "Experience")}</span>
-          <span class="meta-value">${docExp}</span>
+        <button class="btn-book-appt" onclick="openBookAppointment('${key}')">
+          <span>📅</span> Book Appointment
+        </button>
+        <button class="btn-edit-profile" onclick="openEditDoctorProfile('${key}')">
+          <span>✏️</span> Edit Profile
+        </button>
+      </div>
+    `;
+  }
+
+  // Active Tab state
+  const curTab = activeDocProfileTab[key] || "about";
+
+  // Build Hero Card Quick Meta
+  const affils = d.hospitalAffiliations && d.hospitalAffiliations.length
+    ? d.hospitalAffiliations
+    : [docHosp, "Fortis Escorts Hospital, Delhi"];
+  const expertiseList = d.expertise && d.expertise.length
+    ? d.expertise
+    : ["Diabetes", "Hypertension", "Cardiac Care", "Respiratory Disorders", "General Medicine"];
+  const languagesList = d.languages && d.languages.length
+    ? d.languages.join(", ")
+    : "English, Hindi";
+  const fees = d.fees || { firstVisit: 800, followup: 600 };
+  const avail = d.availability || { days: "Mon – Sat", slots: ["9:00 AM – 1:00 PM", "4:00 PM – 8:00 PM"] };
+
+  // Profile Container HTML
+  const profileContainer = document.getElementById(`doctor${key}Profile`);
+  if (profileContainer) {
+    profileContainer.innerHTML = `
+      <!-- 1. HERO PROFILE CARD -->
+      <div class="doc-hero-card">
+        <div class="doc-hero-left">
+          <div class="doc-hero-avatar-box">
+            <img src="${imgSrc}" alt="${docName}" class="doc-hero-avatar-img" onerror="this.src='hero.jpg'">
+            <div class="doc-avail-pill">
+              <span class="doc-avail-dot"></span> Available
+            </div>
+          </div>
         </div>
-        <div class="doctor-meta-item">
-          <span class="meta-label">${t("netOutcome", "Net Outcome")}</span>
-          <span class="outcome-badge ${outcomeClass(d.netOutcome)}">${outcomeIcon(d.netOutcome)} ${translateOutcome(d.netOutcome)}</span>
+
+        <div class="doc-hero-content">
+          <!-- Row 1: Quick Meta 4-column Grid -->
+          <div class="doc-hero-row-1">
+            <div class="doc-meta-box">
+              <div class="doc-meta-icon">🩺</div>
+              <div>
+                <div class="doc-meta-label">Specialisation</div>
+                <div class="doc-meta-val">${esc(d.primarySpec || "Internal Medicine")}</div>
+              </div>
+            </div>
+            <div class="doc-meta-box">
+              <div class="doc-meta-icon">💼</div>
+              <div>
+                <div class="doc-meta-label">Experience</div>
+                <div class="doc-meta-val">${esc(d.experience || "14 years")}</div>
+              </div>
+            </div>
+            <div class="doc-meta-box">
+              <div class="doc-meta-icon">📄</div>
+              <div>
+                <div class="doc-meta-label">Registration No.</div>
+                <div class="doc-meta-val">${esc(d.regNo || "MMC-74832")}</div>
+              </div>
+            </div>
+            <div class="doc-meta-box">
+              <div class="doc-meta-icon">🌐</div>
+              <div>
+                <div class="doc-meta-label">Languages</div>
+                <div class="doc-meta-val">${esc(languagesList)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Qualifications & Consultation Fees / Availability -->
+          <div class="doc-hero-row-2">
+            <div class="doc-qual-box">
+              <div class="doc-meta-icon">🎓</div>
+              <div>
+                <div class="doc-meta-label">Qualifications & Education</div>
+                <div class="doc-meta-val" style="font-weight:600;line-height:1.45;margin-top:4px;">
+                  ${esc(d.educationSummary || d.degrees || "MBBS (Mumbai University, 2008), MD (Internal Medicine, 2011)")}
+                </div>
+              </div>
+            </div>
+
+            <div class="doc-fees-box">
+              <div class="doc-fees-row">
+                <span class="doc-fees-label">💳 Consultation Fees</span>
+                <span class="doc-fees-val">₹${fees.firstVisit} <small style="font-weight:500;color:var(--ink-muted);">(First Visit)</small> · ₹${fees.followup} <small style="font-weight:500;color:var(--ink-muted);">(Follow-up)</small></span>
+              </div>
+              <div class="doc-fees-row" style="border-top:1px dashed var(--blue-200);padding-top:6px;">
+                <span class="doc-fees-label">📅 Availability</span>
+                <span class="doc-fees-val" style="font-size:12px;">${esc(avail.days)} · ${esc((avail.slots || []).join(" | "))}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Areas of Expertise & Hospital Affiliations -->
+          <div class="doc-hero-row-3">
+            <div>
+              <div class="doc-meta-label" style="display:flex;align-items:center;gap:6px;">
+                <span>🏷️</span> Areas of Expertise
+              </div>
+              <div class="doc-chips-wrap">
+                ${expertiseList.map(item => `<span class="doc-chip-tag">${esc(item)}</span>`).join("")}
+              </div>
+            </div>
+
+            <div>
+              <div class="doc-meta-label" style="display:flex;align-items:center;gap:6px;">
+                <span>🏥</span> Hospital Affiliations
+              </div>
+              <div class="doc-affil-list">
+                ${affils.map(h => `<div style="margin-top:2px;font-weight:600;">• ${esc(h)}</div>`).join("")}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  `;
+
+      <!-- 2. MIDDLE 2-COLUMN SECTION: TABS & RATINGS -->
+      <div class="doc-middle-grid">
+        <div class="doc-tab-card">
+          <div class="doc-tabs-nav" id="docTabsNav_${key}">
+            <button class="doc-tab-btn ${curTab === 'about' ? 'active' : ''}" data-tab="about" onclick="switchDoctorProfileTab('${key}', 'about')">
+              <span>👤</span> About Doctor
+            </button>
+            <button class="doc-tab-btn ${curTab === 'experience' ? 'active' : ''}" data-tab="experience" onclick="switchDoctorProfileTab('${key}', 'experience')">
+              <span>💼</span> Experience
+            </button>
+            <button class="doc-tab-btn ${curTab === 'research' ? 'active' : ''}" data-tab="research" onclick="switchDoctorProfileTab('${key}', 'research')">
+              <span>🏆</span> Research & Achievements
+            </button>
+            <button class="doc-tab-btn ${curTab === 'reviews' ? 'active' : ''}" data-tab="reviews" onclick="switchDoctorProfileTab('${key}', 'reviews')">
+              <span>⭐</span> Reviews
+            </button>
+          </div>
+          <div class="doc-tab-body" id="docTabBody_${key}">
+            ${renderDoctorTabContent(key, curTab)}
+          </div>
+        </div>
+
+        <!-- Ratings & Reviews Score Card -->
+        <div id="docReviewsCard_${key}">
+          ${renderDoctorReviewsCard(key)}
+        </div>
+      </div>
+
+      <!-- 3. DETAIL CARDS 3-COLUMN GRID -->
+      <div class="doc-three-cards-grid">
+        <!-- Education & Qualifications -->
+        <div class="doc-detail-card">
+          <div class="doc-card-title">
+            <span>🎓</span> Education & Qualifications
+          </div>
+          <ul class="doc-bullet-list">
+            ${(d.education || []).map(ed => `
+              <li class="doc-bullet-item">
+                <span class="doc-bullet-dot"></span>
+                <div>
+                  <strong>${esc(ed.degree)}</strong>
+                  <div style="font-size:11.5px;color:var(--ink-muted);margin-top:1px;">${esc(ed.institution)} (${esc(ed.year)})</div>
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="doc-detail-card">
+          <div class="doc-card-title">
+            <span>💼</span> Work Experience
+          </div>
+          <ul class="doc-bullet-list">
+            ${(d.workExperience || []).map(wx => `
+              <li class="doc-bullet-item">
+                <span class="doc-bullet-dot"></span>
+                <div>
+                  <strong>${esc(wx.role)}</strong>
+                  <div style="font-size:11.5px;color:var(--ink-muted);margin-top:1px;">${esc(wx.hospital)} (${esc(wx.period)})</div>
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+        </div>
+
+        <!-- Awards & Achievements -->
+        <div class="doc-detail-card">
+          <div class="doc-card-title">
+            <span>🏆</span> Awards & Achievements
+          </div>
+          <ul class="doc-bullet-list">
+            ${(d.awards || []).map(aw => `
+              <li class="doc-bullet-item">
+                <span class="doc-bullet-dot" style="background:#f59e0b;"></span>
+                <div>
+                  <strong>${esc(aw.title)}</strong>
+                  <div style="font-size:11.5px;color:var(--ink-muted);margin-top:1px;">${esc(aw.issuer)} (${esc(aw.year)})</div>
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4. BOTTOM STATS & AFFILIATIONS BAR -->
+      <div class="doc-bottom-bar">
+        <div class="doc-bottom-item">
+          <div class="doc-bottom-icon">📈</div>
+          <div>
+            <div class="doc-bottom-label">Treatment History & Clinical Track Record</div>
+            <div class="doc-bottom-val">
+              ${esc(d.stats?.patientsTreated || "2,500+")} Patients Treated · ${esc(d.stats?.positiveOutcomes || "95%")} Positive Outcomes
+              <span class="outcome-badge ${outcomeClass(d.netOutcome)}" style="padding:2px 8px;font-size:11px;margin-left:6px;">${outcomeIcon(d.netOutcome)} Net: ${translateOutcome(d.netOutcome)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-bottom-item">
+          <div class="doc-bottom-icon">👥</div>
+          <div>
+            <div class="doc-bottom-label">Medical Memberships</div>
+            <div class="doc-bottom-val">
+              ${esc((d.memberships || ["IMA", "RSSDI", "API"]).join(", "))}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
   // Medicines
   const medsEl = document.getElementById(`medicines${key}`);
@@ -2177,41 +3262,357 @@ function deleteMedicine(key, id) {
 }
 
 /* ─────────────────────────────────────────────
-   MODALS — EDIT DOCTOR INFO
+   MODALS — APPOINTMENT BOOKING & EDIT DOCTOR PROFILE
 ───────────────────────────────────────────── */
-function openEditDoctorInfo(key) {
+function openBookAppointment(key) {
   const d = appData.doctors[key];
-  openModal(`✏ Edit Doctor ${key} Info`, `
-    <div class="form-group">
-      <label>Full Name</label>
-      <input id="df_name" value="${esc(d.name)}">
+  if (!d) return;
+  const fees = d.fees || { firstVisit: 800, followup: 600 };
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+  const slots = (d.availability && d.availability.slots && d.availability.slots.length)
+    ? ["09:30 AM", "11:00 AM", "04:30 PM", "06:00 PM", "07:30 PM"]
+    : ["09:30 AM", "11:00 AM", "05:00 PM", "06:30 PM"];
+
+  openModal(`📅 Book Appointment — ${d.name}`, `
+    <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--blue-50);border-radius:12px;border:1px solid var(--blue-100);margin-bottom:16px;">
+      <img src="${key === 'A' ? 'doctor_a.jpg' : 'doctor_b.jpg'}" style="width:52px;height:52px;border-radius:10px;object-fit:cover;" onerror="this.src='hero.jpg'">
+      <div>
+        <div style="font-weight:800;color:var(--ink);font-size:15px;">${esc(d.name)}</div>
+        <div style="font-size:12px;color:var(--blue-700);font-weight:600;">${esc(d.primarySpec || d.spec)} · ${esc(d.hospital)}</div>
+        <div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">Consultation Fee: ₹${fees.firstVisit} (First Visit) · ₹${fees.followup} (Follow-up)</div>
+      </div>
     </div>
+
     <div class="form-group">
-      <label>Specialization</label>
-      <input id="df_spec" value="${esc(d.spec)}">
+      <label>Consultation Mode</label>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--blue-500);background:var(--blue-50);border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;">
+          <input type="radio" name="appt_mode" value="In-Clinic" checked> 🏥 In-Clinic Visit
+        </label>
+        <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;font-weight:700;font-size:12.5px;">
+          <input type="radio" name="appt_mode" value="Video Call"> 💻 Video Consultation
+        </label>
+      </div>
     </div>
+
+    <div class="doc-form-grid-2">
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" id="bk_date" value="${tomorrow}" min="${new Date().toISOString().split("T")[0]}">
+      </div>
+      <div class="form-group">
+        <label>Available Time Slot</label>
+        <select id="bk_slot" class="form-select">
+          ${slots.map(s => `<option value="${s}">${s}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+
     <div class="form-group">
-      <label>Hospital / Clinic</label>
-      <input id="df_hospital" value="${esc(d.hospital)}">
+      <label>Reason for Consultation / Current Symptoms</label>
+      <textarea id="bk_reason" rows="2" placeholder="Briefly describe symptoms or questions for ${d.name}...">Routine blood pressure review & treatment continuity check</textarea>
     </div>
-    <div class="form-group">
-      <label>Years of Experience</label>
-      <input id="df_exp" value="${esc(d.experience)}">
+
+    <div style="background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-muted);">
+        <span>Consultation Fee (First Visit)</span>
+        <span style="font-weight:700;color:var(--ink);">₹${fees.firstVisit}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--green-700);margin-top:4px;">
+        <span>MED-TRACE Digital Continuity Record</span>
+        <span style="font-weight:700;">INCLUDED (FREE)</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;color:var(--ink);border-top:1px solid var(--line);padding-top:8px;margin-top:6px;">
+        <span>Total Payable at Clinic</span>
+        <span>₹${fees.firstVisit}</span>
+      </div>
     </div>
-    <button class="btn-save" onclick="saveDoctorInfo('${key}')">💾 Save Doctor Info</button>
+
+    <button class="btn-save" style="background:var(--blue-600);" onclick="confirmBookAppointment('${key}')">
+      ✅ Confirm Appointment Booking
+    </button>
   `);
 }
 
-function saveDoctorInfo(key) {
-  appData.doctors[key].name = document.getElementById("df_name").value.trim();
-  appData.doctors[key].spec = document.getElementById("df_spec").value.trim();
-  appData.doctors[key].hospital = document.getElementById("df_hospital").value.trim();
-  appData.doctors[key].experience = document.getElementById("df_exp").value.trim();
+function confirmBookAppointment(key) {
+  const d = appData.doctors[key];
+  const date = document.getElementById("bk_date").value || "Tomorrow";
+  const slot = document.getElementById("bk_slot").value || "10:00 AM";
+  const reason = document.getElementById("bk_reason").value.trim() || "Consultation";
+  const mode = (document.querySelector('input[name="appt_mode"]:checked') || {}).value || "In-Clinic";
+
+  if (!appData.appointments) appData.appointments = [];
+  const appt = {
+    id: `APT-${Date.now().toString().slice(-6)}`,
+    doctorId: d.id,
+    doctorKey: key,
+    doctorName: d.name,
+    patientName: appData.patient ? appData.patient.name : "Aarav Sharma",
+    date: date,
+    slot: slot,
+    mode: mode,
+    reason: reason,
+    status: "Confirmed",
+    createdAt: new Date().toISOString()
+  };
+  appData.appointments.unshift(appt);
+
+  // Add timeline notification/record for clinical continuity
+  if (appData.timeline) {
+    appData.timeline.unshift({
+      id: `t-appt-${Date.now()}`,
+      date: date,
+      title: `Upcoming Consultation — ${d.name}`,
+      desc: `Scheduled ${mode} appointment at ${slot}. Reason: ${reason}`,
+      outcome: "No Change",
+      doctor: key
+    });
+  }
+
+  saveData();
+  closeModal();
+
+  showToast(`🎉 Appointment booked with ${d.name} on ${date} at ${slot} (${mode})!`, "success");
+  if (typeof playReminderChime === "function") playReminderChime();
+}
+
+function openEditDoctorProfile(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+  const fees = d.fees || { firstVisit: 800, followup: 600 };
+  const avail = d.availability || { days: "Mon – Sat", slots: ["9:00 AM – 1:00 PM", "4:00 PM – 8:00 PM"] };
+  const expertiseStr = (d.expertise || []).join(", ");
+  const languagesStr = (d.languages || ["English", "Hindi"]).join(", ");
+  const affilsStr = (d.hospitalAffiliations || [d.hospital]).join(", ");
+  const membershipsStr = (d.memberships || ["IMA", "RSSDI", "API"]).join(", ");
+
+  const eduLines = (d.education || []).map(e => `${e.degree} | ${e.institution} | ${e.year}`).join("\n");
+  const expLines = (d.workExperience || []).map(w => `${w.role} | ${w.hospital} | ${w.period}`).join("\n");
+  const pubLines = (d.research || []).map(r => `${r.title} | ${r.journal} | ${r.year}`).join("\n");
+  const awdLines = (d.awards || []).map(a => `${a.title} | ${a.issuer} | ${a.year}`).join("\n");
+
+  openModal(`✏ Edit Profile — ${d.name}`, `
+    <div style="max-height:72vh;overflow-y:auto;padding-right:6px;">
+      <div class="modal-section-title">1. Professional Overview & Identification</div>
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>Doctor Full Name</label>
+          <input id="ed_name" value="${esc(d.name)}">
+        </div>
+        <div class="form-group">
+          <label>Degrees & Professional Title</label>
+          <input id="ed_degrees" value="${esc(d.degrees || 'MBBS, MD')}">
+        </div>
+      </div>
+
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>Primary Specialisation</label>
+          <input id="ed_primarySpec" value="${esc(d.primarySpec || 'Internal Medicine')}">
+        </div>
+        <div class="form-group">
+          <label>Medical Council Registration No.</label>
+          <input id="ed_regNo" value="${esc(d.regNo || 'MMC-74832')}">
+        </div>
+      </div>
+
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>Years of Clinical Experience</label>
+          <input id="ed_exp" value="${esc(d.experience || '14 years')}">
+        </div>
+        <div class="form-group">
+          <label>Languages Spoken (comma separated)</label>
+          <input id="ed_languages" value="${esc(languagesStr)}">
+        </div>
+      </div>
+
+      <div class="modal-section-title">2. Affiliations, Fees & Availability</div>
+      <div class="form-group">
+        <label>Hospital & Clinic Affiliations (comma separated)</label>
+        <input id="ed_affils" value="${esc(affilsStr)}">
+      </div>
+
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>First-Visit Consultation Fee (₹)</label>
+          <input type="number" id="ed_feeFirst" value="${fees.firstVisit}">
+        </div>
+        <div class="form-group">
+          <label>Follow-up Consultation Fee (₹)</label>
+          <input type="number" id="ed_feeFollow" value="${fees.followup}">
+        </div>
+      </div>
+
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>Availability Days</label>
+          <input id="ed_availDays" value="${esc(avail.days)}">
+        </div>
+        <div class="form-group">
+          <label>Availability Slot Timings (comma separated)</label>
+          <input id="ed_availSlots" value="${esc((avail.slots || []).join(', '))}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Areas of Expertise (comma separated)</label>
+        <input id="ed_expertise" value="${esc(expertiseStr)}">
+      </div>
+
+      <div class="modal-section-title">3. About Doctor & Clinical Philosophy</div>
+      <div class="form-group">
+        <label>About Doctor (Summary)</label>
+        <textarea id="ed_about" rows="3">${esc(d.about || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Extended Clinical Philosophy (Read More)</label>
+        <textarea id="ed_aboutExt" rows="2">${esc(d.aboutExtended || '')}</textarea>
+      </div>
+
+      <div class="modal-section-title">4. Credentials, Research & Honors (Format: Title | Organization | Year)</div>
+      <div class="form-group">
+        <label>Education & Qualifications (One per line: Degree | University | Year)</label>
+        <textarea id="ed_edu" rows="3" placeholder="MBBS | Mumbai University | 2008&#10;MD | Mumbai University | 2011">${esc(eduLines)}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Work Experience (One per line: Role | Hospital | Period)</label>
+        <textarea id="ed_work" rows="3" placeholder="Senior Consultant | Apollo Hospitals | 2014 – Present">${esc(expLines)}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Research Papers & Publications (One per line: Title | Journal | Year)</label>
+        <textarea id="ed_research" rows="3" placeholder="Glycemic Variability Study | Indian Heart Journal | 2021">${esc(pubLines)}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Awards & Achievements (One per line: Title | Issuer | Year)</label>
+        <textarea id="ed_awards" rows="3" placeholder="Best Specialist Award | AIIMS | 2018">${esc(awdLines)}</textarea>
+      </div>
+
+      <div class="modal-section-title">5. Treatment Statistics & Memberships</div>
+      <div class="doc-form-grid-2">
+        <div class="form-group">
+          <label>Number of Patients Treated (e.g. 2,500+)</label>
+          <input id="ed_ptsTreated" value="${esc(d.stats?.patientsTreated || '2,500+')}">
+        </div>
+        <div class="form-group">
+          <label>Verified Positive Outcomes (e.g. 95%)</label>
+          <input id="ed_posOutcomes" value="${esc(d.stats?.positiveOutcomes || '95%')}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Medical Memberships (comma separated)</label>
+        <input id="ed_memberships" value="${esc(membershipsStr)}">
+      </div>
+
+      <button class="btn-save" style="margin-top:14px;background:var(--blue-600);" onclick="saveDoctorProfile('${key}')">
+        💾 Save Doctor Profile
+      </button>
+    </div>
+  `);
+}
+
+function saveDoctorProfile(key) {
+  const d = appData.doctors[key];
+  if (!d) return;
+
+  d.name = document.getElementById("ed_name").value.trim() || d.name;
+  d.degrees = document.getElementById("ed_degrees").value.trim() || d.degrees;
+  d.primarySpec = document.getElementById("ed_primarySpec").value.trim() || d.primarySpec;
+  d.spec = `${d.primarySpec} • ${d.degrees}`;
+  d.regNo = document.getElementById("ed_regNo").value.trim() || d.regNo;
+  d.experience = document.getElementById("ed_exp").value.trim() || d.experience;
+
+  const rawLangs = document.getElementById("ed_languages").value.split(",").map(s => s.trim()).filter(Boolean);
+  if (rawLangs.length) d.languages = rawLangs;
+
+  const rawAffils = document.getElementById("ed_affils").value.split(",").map(s => s.trim()).filter(Boolean);
+  if (rawAffils.length) {
+    d.hospitalAffiliations = rawAffils;
+    d.hospital = rawAffils[0];
+  }
+
+  const feeFirst = parseInt(document.getElementById("ed_feeFirst").value, 10);
+  const feeFollow = parseInt(document.getElementById("ed_feeFollow").value, 10);
+  d.fees = {
+    firstVisit: isNaN(feeFirst) ? 800 : feeFirst,
+    followup: isNaN(feeFollow) ? 600 : feeFollow
+  };
+
+  const availDays = document.getElementById("ed_availDays").value.trim() || "Mon – Sat";
+  const rawSlots = document.getElementById("ed_availSlots").value.split(",").map(s => s.trim()).filter(Boolean);
+  d.availability = {
+    days: availDays,
+    slots: rawSlots.length ? rawSlots : ["9:00 AM – 1:00 PM", "4:00 PM – 8:00 PM"]
+  };
+
+  const rawExp = document.getElementById("ed_expertise").value.split(",").map(s => s.trim()).filter(Boolean);
+  if (rawExp.length) d.expertise = rawExp;
+
+  d.about = document.getElementById("ed_about").value.trim() || d.about;
+  d.aboutExtended = document.getElementById("ed_aboutExt").value.trim() || d.aboutExtended;
+
+  // Parse Education
+  const eduRaw = document.getElementById("ed_edu").value.split("\n").map(l => l.trim()).filter(Boolean);
+  if (eduRaw.length) {
+    d.education = eduRaw.map(line => {
+      const parts = line.split("|").map(p => p.trim());
+      return { degree: parts[0] || "", institution: parts[1] || "", year: parts[2] || "" };
+    });
+    d.educationSummary = d.education.map(e => `${e.degree} (${e.institution}, ${e.year})`).slice(0, 2).join(", ");
+  }
+
+  // Parse Work
+  const workRaw = document.getElementById("ed_work").value.split("\n").map(l => l.trim()).filter(Boolean);
+  if (workRaw.length) {
+    d.workExperience = workRaw.map(line => {
+      const parts = line.split("|").map(p => p.trim());
+      return { role: parts[0] || "", hospital: parts[1] || "", period: parts[2] || "" };
+    });
+  }
+
+  // Parse Research
+  const resRaw = document.getElementById("ed_research").value.split("\n").map(l => l.trim()).filter(Boolean);
+  if (resRaw.length) {
+    d.research = resRaw.map(line => {
+      const parts = line.split("|").map(p => p.trim());
+      return { title: parts[0] || "", journal: parts[1] || "", year: parts[2] || "" };
+    });
+  }
+
+  // Parse Awards
+  const awdRaw = document.getElementById("ed_awards").value.split("\n").map(l => l.trim()).filter(Boolean);
+  if (awdRaw.length) {
+    d.awards = awdRaw.map(line => {
+      const parts = line.split("|").map(p => p.trim());
+      return { title: parts[0] || "", issuer: parts[1] || "", year: parts[2] || "" };
+    });
+  }
+
+  // Treatment Stats & Memberships
+  if (!d.stats) d.stats = {};
+  d.stats.patientsTreated = document.getElementById("ed_ptsTreated").value.trim() || d.stats.patientsTreated;
+  d.stats.positiveOutcomes = document.getElementById("ed_posOutcomes").value.trim() || d.stats.positiveOutcomes;
+
+  const rawMbr = document.getElementById("ed_memberships").value.split(",").map(s => s.trim()).filter(Boolean);
+  if (rawMbr.length) d.memberships = rawMbr;
+
   saveData();
   closeModal();
   renderDoctorSection(key);
-  renderTopbar();
-  showToast("✅ Doctor info updated!", "success");
+  if (typeof renderTopbar === "function") renderTopbar();
+  showToast("✅ Doctor profile updated successfully!", "success");
+}
+
+function openEditDoctorInfo(key) {
+  openEditDoctorProfile(key);
+}
+
+function saveDoctorInfo(key) {
+  saveDoctorProfile(key);
 }
 
 /* ─────────────────────────────────────────────
@@ -4145,6 +5546,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initSupabase();
   checkSupabaseSession();
   checkBackendConnection().then(() => syncFromBackend());
+
+  // Set up the responsive (off-canvas) sidebar for tablets & phones
+  applyNavViewport();
+  const navMQ = window.matchMedia("(max-width: 900px)");
+  const onNavMQChange = () => applyNavViewport();
+  if (navMQ.addEventListener) navMQ.addEventListener("change", onNavMQChange);
+  else if (navMQ.addListener) navMQ.addListener(onNavMQChange);
 });
 
 async function checkSupabaseSession() {

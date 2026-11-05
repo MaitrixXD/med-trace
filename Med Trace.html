@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MED-TRACE | Patient Treatment Journey</title>
     <meta name="description"
         content="MED-TRACE: Track your complete medical journey, doctor prescriptions, medicine outcomes, and patient history in one secure place.">
@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.2">
-    <link rel="stylesheet" href="features.css?v=2.2">
+    <link rel="stylesheet" href="style.css?v=2.4">
+    <link rel="stylesheet" href="features.css?v=2.4">
     <meta name="theme-color" content="#1a6dd6">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -476,6 +476,9 @@
             </div>
         </header>
 
+        <!-- Mobile sidebar backdrop (visible only when the sidebar is open on small screens) -->
+        <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="closeMobileSidebar()" aria-hidden="true"></div>
+
         <div class="app-layout">
 
             <!-- Sidebar -->
@@ -638,7 +641,7 @@
                         <div class="section-actions" id="doctorAActions"></div>
                     </div>
 
-                    <div class="doctor-profile-card" id="doctorAProfile"></div>
+                    <div class="doctor-profile-wrapper" id="doctorAProfile"></div>
 
                     <div class="medicines-section">
                         <div class="medicines-header">
@@ -664,7 +667,7 @@
                         <div class="section-actions" id="doctorBActions"></div>
                     </div>
 
-                    <div class="doctor-profile-card" id="doctorBProfile"></div>
+                    <div class="doctor-profile-wrapper" id="doctorBProfile"></div>
 
                     <div class="medicines-section">
                         <div class="medicines-header">
