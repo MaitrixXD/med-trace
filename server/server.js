@@ -292,6 +292,232 @@ app.post('/api/reminders', (req, res) => {
   res.status(201).json({ success: true, data: newReminder });
 });
 
+// ─── 9. Doctor Reviews ─────────────────────────────────────────────────────
+
+// In-memory doctor_reviews table:
+// { review_id, doctor_id, patient_id, appointment_id, rating, review_text, status, created_at, updated_at }
+let doctorReviews = [
+  {
+    review_id: "REV-001",
+    doctor_id: "DR-A",
+    patient_id: "PAT-001",
+    appointment_id: "APT-2024-001",
+    rating: 5,
+    review_text: "Dr. Verma took the time to explain the rationale for switching from Losartan to Telmisartan. My BP is now completely under control.",
+    status: "approved",
+    author_name: "Aarav S.",
+    verified: true,
+    created_at: "2024-06-15T10:30:00Z",
+    updated_at: "2024-06-15T10:30:00Z"
+  },
+  {
+    review_id: "REV-002",
+    doctor_id: "DR-A",
+    patient_id: "PAT-002",
+    appointment_id: "APT-2024-002",
+    rating: 5,
+    review_text: "Very attentive physician. Does not rush through consultations and provides clear lifestyle advice alongside medication.",
+    status: "approved",
+    author_name: "Sunita M.",
+    verified: true,
+    created_at: "2024-03-20T09:00:00Z",
+    updated_at: "2024-03-20T09:00:00Z"
+  },
+  {
+    review_id: "REV-003",
+    doctor_id: "DR-A",
+    patient_id: "PAT-003",
+    appointment_id: "APT-2024-003",
+    rating: 4,
+    review_text: "Excellent diagnostic acumen and warm bedside manner. Highly recommended for chronic hypertension management.",
+    status: "approved",
+    author_name: "Ramesh K.",
+    verified: true,
+    created_at: "2024-01-10T11:00:00Z",
+    updated_at: "2024-01-10T11:00:00Z"
+  },
+  {
+    review_id: "REV-004",
+    doctor_id: "DR-B",
+    patient_id: "PAT-001",
+    appointment_id: "APT-2024-004",
+    rating: 5,
+    review_text: "Dr. Meena Kapoor diagnosed my calcium-channel tolerance accurately. Switching to Amlodipine stabilized my night readings immediately.",
+    status: "approved",
+    author_name: "Aarav S.",
+    verified: true,
+    created_at: "2024-08-12T14:00:00Z",
+    updated_at: "2024-08-12T14:00:00Z"
+  },
+  {
+    review_id: "REV-005",
+    doctor_id: "DR-B",
+    patient_id: "PAT-004",
+    appointment_id: "APT-2024-005",
+    rating: 5,
+    review_text: "One of the most knowledgeable and compassionate cardiologists. She explains ECG and echocardiogram reports in plain language.",
+    status: "approved",
+    author_name: "Priya R.",
+    verified: true,
+    created_at: "2024-05-08T10:00:00Z",
+    updated_at: "2024-05-08T10:00:00Z"
+  },
+  {
+    review_id: "REV-006",
+    doctor_id: "DR-B",
+    patient_id: "PAT-005",
+    appointment_id: "APT-2024-006",
+    rating: 5,
+    review_text: "Top tier care. Her preventive strategy helped normalize my cholesterol and blood pressure without over-medication.",
+    status: "approved",
+    author_name: "Vikram N.",
+    verified: true,
+    created_at: "2024-02-14T16:00:00Z",
+    updated_at: "2024-02-14T16:00:00Z"
+  }
+];
+
+// Verified completed appointments (eligibility pool)
+const verifiedAppointments = [
+  { appointment_id: "APT-2024-001", patient_id: "PAT-001", doctor_id: "DR-A", status: "completed", date: "2024-06-10" },
+  { appointment_id: "APT-2024-004", patient_id: "PAT-001", doctor_id: "DR-B", status: "completed", date: "2024-08-05" },
+  // Any logged-in patient can also submit via the "current treatment" appointment
+  { appointment_id: "APT-CURRENT-A", patient_id: "PAT-001", doctor_id: "DR-A", status: "completed", date: "2024-07-16" },
+  { appointment_id: "APT-CURRENT-B", patient_id: "PAT-001", doctor_id: "DR-B", status: "completed", date: "2024-09-01" }
+];
+
+function computeRatingSummary(doctorId) {
+  const approved = doctorReviews.filter(r => r.doctor_id === doctorId && r.status === 'approved');
+  if (approved.length === 0) return { average: 0, total: 0, breakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 } };
+  const total = approved.length;
+  const sum = approved.reduce((acc, r) => acc + r.rating, 0);
+  const average = Math.round((sum / total) * 10) / 10;
+  const breakdown = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  approved.forEach(r => { breakdown[r.rating] = (breakdown[r.rating] || 0) + 1; });
+  // Convert to percentages
+  const breakdownPct = {};
+  [5, 4, 3, 2, 1].forEach(s => { breakdownPct[s] = Math.round((breakdown[s] / total) * 100); });
+  return { average, total, breakdown: breakdownPct };
+}
+
+// POST /api/reviews — Submit a new review
+app.post('/api/reviews', (req, res) => {
+  const { doctor_id, patient_id, appointment_id, rating, review_text, author_name } = req.body;
+
+  if (!doctor_id || !patient_id || !rating || !review_text) {
+    return res.status(400).json({ success: false, message: 'doctor_id, patient_id, rating, and review_text are required.' });
+  }
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ success: false, message: 'Rating must be between 1 and 5.' });
+  }
+  if (!review_text.trim() || review_text.trim().length < 10) {
+    return res.status(400).json({ success: false, message: 'Review text must be at least 10 characters.' });
+  }
+
+  // Eligibility: must have a completed appointment with this doctor
+  const eligible = verifiedAppointments.some(
+    a => a.patient_id === patient_id && a.doctor_id === doctor_id && a.status === 'completed'
+  );
+  if (!eligible) {
+    return res.status(403).json({ success: false, message: 'You must have a completed appointment with this doctor to submit a review.' });
+  }
+
+  // Duplicate prevention: one review per appointment
+  if (appointment_id) {
+    const dup = doctorReviews.find(r => r.appointment_id === appointment_id && r.patient_id === patient_id);
+    if (dup) {
+      return res.status(409).json({ success: false, message: 'You have already submitted a review for this appointment.' });
+    }
+  }
+
+  const newReview = {
+    review_id: `REV-${Date.now()}`,
+    doctor_id,
+    patient_id,
+    appointment_id: appointment_id || `APT-${Date.now()}`,
+    rating: parseInt(rating),
+    review_text: review_text.trim(),
+    status: 'approved',
+    author_name: author_name || 'Patient',
+    verified: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+
+  doctorReviews.unshift(newReview);
+  res.status(201).json({ success: true, message: 'Review submitted successfully.', data: newReview, summary: computeRatingSummary(doctor_id) });
+});
+
+// GET /api/doctors/:id/reviews — Fetch all approved reviews for a doctor
+app.get('/api/doctors/:id/reviews', (req, res) => {
+  const doctorId = req.params.id;
+  const reviews = doctorReviews
+    .filter(r => r.doctor_id === doctorId && r.status === 'approved')
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  res.json({ success: true, count: reviews.length, data: reviews });
+});
+
+// GET /api/doctors/:id/ratings — Fetch rating summary for a doctor
+app.get('/api/doctors/:id/ratings', (req, res) => {
+  const doctorId = req.params.id;
+  const summary = computeRatingSummary(doctorId);
+  res.json({ success: true, data: summary });
+});
+
+// GET /api/reviews/eligibility — Check if patient can review a doctor
+app.get('/api/reviews/eligibility', (req, res) => {
+  const { patient_id, doctor_id } = req.query;
+  if (!patient_id || !doctor_id) {
+    return res.status(400).json({ success: false, message: 'patient_id and doctor_id required.' });
+  }
+  const eligible = verifiedAppointments.some(
+    a => a.patient_id === patient_id && a.doctor_id === doctor_id && a.status === 'completed'
+  );
+  const existingReview = doctorReviews.find(
+    r => r.patient_id === patient_id && r.doctor_id === doctor_id && r.status !== 'deleted'
+  );
+  res.json({
+    success: true,
+    data: {
+      eligible,
+      hasExistingReview: !!existingReview,
+      existingReview: existingReview || null
+    }
+  });
+});
+
+// PUT /api/reviews/:id — Edit own review
+app.put('/api/reviews/:id', (req, res) => {
+  const { id } = req.params;
+  const { patient_id, rating, review_text } = req.body;
+  const review = doctorReviews.find(r => r.review_id === id);
+
+  if (!review) return res.status(404).json({ success: false, message: 'Review not found.' });
+  if (review.patient_id !== patient_id) return res.status(403).json({ success: false, message: 'You can only edit your own reviews.' });
+  if (rating && (rating < 1 || rating > 5)) return res.status(400).json({ success: false, message: 'Rating must be between 1 and 5.' });
+  if (review_text && review_text.trim().length < 10) return res.status(400).json({ success: false, message: 'Review text must be at least 10 characters.' });
+
+  if (rating) review.rating = parseInt(rating);
+  if (review_text) review.review_text = review_text.trim();
+  review.updated_at = new Date().toISOString();
+
+  res.json({ success: true, message: 'Review updated.', data: review, summary: computeRatingSummary(review.doctor_id) });
+});
+
+// DELETE /api/reviews/:id — Delete own review
+app.delete('/api/reviews/:id', (req, res) => {
+  const { id } = req.params;
+  const { patient_id } = req.body;
+  const idx = doctorReviews.findIndex(r => r.review_id === id);
+
+  if (idx === -1) return res.status(404).json({ success: false, message: 'Review not found.' });
+  if (doctorReviews[idx].patient_id !== patient_id) return res.status(403).json({ success: false, message: 'You can only delete your own reviews.' });
+
+  const doctorId = doctorReviews[idx].doctor_id;
+  doctorReviews.splice(idx, 1);
+  res.json({ success: true, message: 'Review deleted.', summary: computeRatingSummary(doctorId) });
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`========================================`);
